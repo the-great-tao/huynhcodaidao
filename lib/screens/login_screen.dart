@@ -13,12 +13,12 @@ class LoginScreen extends StatelessWidget {
           buttonColor: Colors.amber.withAlpha(240),
           textTheme: TextTheme(
             button: TextStyle(
-              fontSize: 16,
+              fontSize: 18,
             ),
           ),
           inputDecorationTheme: InputDecorationTheme(
             labelStyle: TextStyle(
-              fontSize: 16,
+              fontSize: 18,
             ),
             contentPadding: EdgeInsets.all(20),
             enabledBorder: OutlineInputBorder(
@@ -48,7 +48,7 @@ class LoginScreen extends StatelessWidget {
             child: Column(
               children: <Widget>[
                 Container(
-                  margin: EdgeInsets.fromLTRB(100, 80, 100, 80),
+                  margin: EdgeInsets.fromLTRB(80, 60, 80, 60),
                   child: Image(
                     image: AssetImage('assets/login_screen_logo.png'),
                   ),
@@ -64,9 +64,12 @@ class LoginScreen extends StatelessWidget {
                   ),
                 ),
                 Container(
-                  margin: EdgeInsets.fromLTRB(60, 10, 60, 10),
+                  margin: EdgeInsets.fromLTRB(40, 10, 40, 10),
                   child: TextFormField(
                     keyboardType: TextInputType.number,
+                    style: TextStyle(
+                      fontSize: 18,
+                    ),
                     decoration: InputDecoration(
                       labelText: 'Số điện thoại',
                       prefixIcon: Icon(
@@ -79,9 +82,12 @@ class LoginScreen extends StatelessWidget {
                   ),
                 ),
                 Container(
-                  margin: EdgeInsets.fromLTRB(60, 10, 60, 10),
+                  margin: EdgeInsets.fromLTRB(40, 10, 40, 10),
                   child: TextFormField(
                     obscureText: true,
+                    style: TextStyle(
+                      fontSize: 18,
+                    ),
                     decoration: InputDecoration(
                       labelText: 'Mật khẩu',
                       prefixIcon: Icon(
@@ -94,14 +100,14 @@ class LoginScreen extends StatelessWidget {
                   ),
                 ),
                 Container(
-                  padding: EdgeInsets.fromLTRB(60, 40, 60, 120),
+                  padding: EdgeInsets.fromLTRB(40, 40, 40, 100),
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(9999),
                   ),
                   child: SizedBox(
                     width: double.infinity,
                     child: RaisedButton(
-                      padding: EdgeInsets.fromLTRB(60, 20, 60, 20),
+                      padding: EdgeInsets.fromLTRB(40, 20, 40, 20),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(9999),
                         side: BorderSide(
@@ -110,7 +116,7 @@ class LoginScreen extends StatelessWidget {
                       ),
                       onPressed: () {},
                       child: Text(
-                        'Đăng nhập',
+                        'ĐĂNG NHẬP',
                         style: TextStyle(
                           color: Colors.black54,
                         ),
