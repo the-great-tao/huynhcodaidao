@@ -22,12 +22,12 @@ class LoginScreen extends StatelessWidget {
             buttonColor: Colors.amber.withAlpha(240),
             textTheme: TextTheme(
               button: TextStyle(
-                fontSize: ScreenUtil().setSp(50),
+                fontSize: 50.sp,
               ),
             ),
             inputDecorationTheme: InputDecorationTheme(
               labelStyle: TextStyle(
-                fontSize: ScreenUtil().setSp(50),
+                fontSize: 50.sp,
               ),
               contentPadding: EdgeInsetsResponsive.all(50),
               enabledBorder: OutlineInputBorder(
@@ -81,13 +81,13 @@ class LoginScreen extends StatelessWidget {
                     child: TextFormField(
                       keyboardType: TextInputType.number,
                       style: TextStyle(
-                        fontSize: ScreenUtil().setSp(50),
+                        fontSize: 50.sp,
                       ),
                       decoration: InputDecoration(
                         labelText: 'Số điện thoại',
                         prefixIcon: Icon(
                           Icons.phone,
-                          size: ScreenUtil().setSp(80),
+                          size: 80.sp,
                         ),
                         prefixIconConstraints: BoxConstraints(
                           minWidth: 200.w,
@@ -100,13 +100,13 @@ class LoginScreen extends StatelessWidget {
                     child: TextFormField(
                       obscureText: true,
                       style: TextStyle(
-                        fontSize: ScreenUtil().setSp(50),
+                        fontSize: 50.sp,
                       ),
                       decoration: InputDecoration(
                         labelText: 'Mật khẩu',
                         prefixIcon: Icon(
                           Icons.vpn_key,
-                          size: ScreenUtil().setSp(80),
+                          size: 80.sp,
                         ),
                         prefixIconConstraints: BoxConstraints(
                           minWidth: 200.w,
