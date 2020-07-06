@@ -45,7 +45,7 @@ class _LoginScreenState extends State<LoginScreen> {
           if (errorType == DioErrorType.RESPONSE) {
             content = 'Vui lòng kiểm tra số điện thoại hoặc mật khẩu.';
           } else {
-            content = 'Vui lòng kiểm tra kết nối Internet';
+            content = 'Vui lòng kiểm tra kết nối Internet.';
           }
 
           AlertDialog alertDialog = AlertDialog(
