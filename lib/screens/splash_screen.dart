@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:responsive_widgets/responsive_widgets.dart';
 
+import 'package:huynhcodaidao/ui_components/linear_gradients.dart';
+
 class SplashScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -16,14 +18,7 @@ class SplashScreen extends StatelessWidget {
         width: 1080,
         height: 1920,
         decoration: BoxDecoration(
-          gradient: LinearGradient(
-            colors: [
-              Colors.amber,
-              Colors.amberAccent,
-              Colors.amberAccent,
-              Colors.amber,
-            ],
-          ),
+          gradient: LinearGradients.main,
         ),
         child: Center(
           child: ContainerResponsive(
