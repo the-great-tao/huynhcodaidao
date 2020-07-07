@@ -12,12 +12,22 @@ class SplashScreen extends StatelessWidget {
     );
 
     return Scaffold(
-      backgroundColor: Colors.amber,
-      body: Center(
-        child: SizedBox(
-          width: 600.w,
-          height: 600.w,
-          child: Container(
+      body: ContainerResponsive(
+        width: 1080,
+        height: 1920,
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            colors: [
+              Colors.amber,
+              Colors.amberAccent,
+              Colors.amberAccent,
+              Colors.amber,
+            ],
+          ),
+        ),
+        child: Center(
+          child: ContainerResponsive(
+            width: 600,
             child: Image(
               image: AssetImage('assets/login_screen_logo.png'),
             ),
