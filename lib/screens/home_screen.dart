@@ -28,7 +28,7 @@ class _HomeScreenState extends State<HomeScreen> {
       child: SafeArea(
         child: Scaffold(
           appBar: AppBar01Widget(
-            height: 160.h,
+            height: 160.sp,
           ),
           body: Container(
             child: Center(
@@ -36,7 +36,7 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
           ),
           bottomNavigationBar: Container(
-            height: 220.h,
+            height: 180.sp,
             child: BottomNavigationBar(
               currentIndex: _currentIndex,
               type: BottomNavigationBarType.fixed,
