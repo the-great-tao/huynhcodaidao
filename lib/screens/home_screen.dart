@@ -35,11 +35,12 @@ class _HomeScreenState extends State<HomeScreen> {
               child: Text('Home Screen'),
             ),
           ),
-          bottomNavigationBar: SizedBox(
+          bottomNavigationBar: Container(
             height: 220.h,
             child: BottomNavigationBar(
               currentIndex: _currentIndex,
               type: BottomNavigationBarType.fixed,
+              backgroundColor: Colors.white.withAlpha(240),
               selectedIconTheme: IconThemeData(
                 size: 78.sp,
               ),
