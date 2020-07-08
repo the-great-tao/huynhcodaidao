@@ -36,20 +36,20 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
           ),
           bottomNavigationBar: SizedBox(
-            height: 240.h,
+            height: 220.h,
             child: BottomNavigationBar(
               currentIndex: _currentIndex,
               type: BottomNavigationBarType.fixed,
               selectedIconTheme: IconThemeData(
-                size: 80.sp,
+                size: 78.sp,
               ),
               selectedItemColor: Colors.red,
-              selectedFontSize: 40.sp,
+              selectedFontSize: 38.sp,
               unselectedIconTheme: IconThemeData(
-                size: 80.sp,
+                size: 78.sp,
               ),
               unselectedItemColor: Colors.black45,
-              unselectedFontSize: 40.sp,
+              unselectedFontSize: 38.sp,
               items: [
                 BottomNavigationBarItem(
                   icon: new Icon(Icons.home),
