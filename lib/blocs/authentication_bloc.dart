@@ -3,10 +3,12 @@ import 'dart:async';
 import 'package:meta/meta.dart';
 import 'package:bloc/bloc.dart';
 
+import 'package:huynhcodaidao/models/user_token.dart';
+
 import 'package:huynhcodaidao/blocs/authentication_event.dart';
 import 'package:huynhcodaidao/blocs/authentication_state.dart';
+
 import 'package:huynhcodaidao/repositories/user_repository.dart';
-import 'package:huynhcodaidao/services/user_service.dart';
 
 class AuthenticationBloc
     extends Bloc<AuthenticationEvent, AuthenticationState> {
