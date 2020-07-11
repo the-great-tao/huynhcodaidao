@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:responsive_widgets/responsive_widgets.dart';
 
 import 'package:huynhcodaidao/ui_components/linear_gradients.dart';
+
 import 'package:huynhcodaidao/widgets/app_bar_01_widget.dart';
+import 'package:huynhcodaidao/widgets/menu_widget.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -31,9 +33,7 @@ class _HomeScreenState extends State<HomeScreen> {
             height: 160.sp,
           ),
           body: Container(
-            child: Center(
-              child: Text('Home Screen'),
-            ),
+            child: MenuWidget(),
           ),
           bottomNavigationBar: Container(
             height: 180.sp,

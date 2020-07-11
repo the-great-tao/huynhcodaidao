@@ -11,6 +11,8 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:bloc/bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import 'package:huynhcodaidao/models/user_token.dart';
+
 import 'package:huynhcodaidao/blocs/authentication_event.dart';
 import 'package:huynhcodaidao/blocs/authentication_state.dart';
 import 'package:huynhcodaidao/blocs/authentication_bloc.dart';
@@ -18,7 +20,6 @@ import 'package:huynhcodaidao/blocs/login_screen_bloc.dart';
 import 'package:huynhcodaidao/blocs/global_bloc_observer.dart';
 
 import 'package:huynhcodaidao/repositories/user_repository.dart';
-import 'package:huynhcodaidao/services/user_service.dart';
 
 import 'package:huynhcodaidao/screens/splash_screen.dart';
 import 'package:huynhcodaidao/screens/login_screen.dart';
