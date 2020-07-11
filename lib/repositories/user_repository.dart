@@ -2,6 +2,8 @@ import 'package:meta/meta.dart';
 import 'package:hive/hive.dart';
 import 'package:dio/dio.dart';
 
+import 'package:huynhcodaidao/models/user_token.dart';
+
 import 'package:huynhcodaidao/services/user_service.dart';
 
 class UserRepository {
