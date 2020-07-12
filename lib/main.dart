@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:dio/dio.dart';
+import 'package:fluro/fluro.dart';
 import 'package:get_it/get_it.dart';
 
 import 'package:flutter/foundation.dart';
@@ -31,6 +32,7 @@ import 'package:huynhcodaidao/services/menu_service.dart';
 import 'package:huynhcodaidao/screens/splash_screen.dart';
 import 'package:huynhcodaidao/screens/login_screen.dart';
 import 'package:huynhcodaidao/screens/home_screen.dart';
+import 'package:huynhcodaidao/screens/menu_screen.dart';
 
 final GetIt getIt = GetIt.instance;
 
@@ -49,6 +51,9 @@ Future setupGetIt() async {
   );
   getIt.registerLazySingleton<MenuRepository>(
     () => MenuRepository(),
+  );
+  getIt.registerLazySingleton<Router>(
+    () => Router(),
   );
 }
 
@@ -77,6 +82,37 @@ Future setupAppData() async {
   );
 }
 
+Future setupRouter() async {
+  final Router router = getIt.get<Router>();
+
+  router.define(
+    '/home/',
+    transitionType: TransitionType.fadeIn,
+    handler: Handler(
+        handlerFunc: (BuildContext context, Map<String, dynamic> params) {
+      return HomeScreen();
+    }),
+  );
+
+  router.define(
+    '/menu/',
+    transitionType: TransitionType.inFromRight,
+    handler: Handler(
+        handlerFunc: (BuildContext context, Map<String, dynamic> params) {
+      String actionUrl = params['actionUrl'][0];
+      String actionTitle = params['actionTitle'][0];
+
+      actionUrl = utf8.decode(base64Url.decode(actionUrl));
+      actionTitle = utf8.decode(base64Url.decode(actionTitle));
+
+      return MenuScreen(
+        actionUrl: actionUrl,
+        actionTitle: actionTitle,
+      );
+    }),
+  );
+}
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
@@ -87,6 +123,7 @@ void main() async {
 
   await setupGetIt();
   await setupAppData();
+  await setupRouter();
 
   Bloc.observer = GlobalBlocObserver();
 
@@ -107,6 +144,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      onGenerateRoute: getIt.get<Router>().generator,
       debugShowCheckedModeBanner: false,
       locale: DevicePreview.of(context).locale,
       builder: DevicePreview.appBuilder,
