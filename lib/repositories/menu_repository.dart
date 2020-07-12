@@ -1,3 +1,4 @@
+import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
 import 'package:meta/meta.dart';
 import 'package:hive/hive.dart';
@@ -16,10 +17,17 @@ class MenuRepository {
   Future<Menu> get({
     @required String path,
     int page = 1,
+    bool fullUrl = false,
   }) async {
+    MenuService menuService = _menuService;
     UserToken userToken = _appData.get('userToken');
 
-    return _menuService.get(
+    if (fullUrl) {
+      menuService = MenuService(Dio(), baseUrl: path);
+      path = '/';
+    }
+
+    return menuService.get(
       path: path,
       token: 'Bearer ' + userToken.accessToken,
       page: page,
