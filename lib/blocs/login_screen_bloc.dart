@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:get_it/get_it.dart';
 import 'package:meta/meta.dart';
 import 'package:bloc/bloc.dart';
 
@@ -10,16 +11,16 @@ import 'package:huynhcodaidao/blocs/login_screen_state.dart';
 
 import 'package:huynhcodaidao/repositories/user_repository.dart';
 
+final GetIt getIt = GetIt.instance;
+
 class LoginScreenBloc extends Bloc<LoginScreenEvent, LoginScreenState> {
   // ignore: close_sinks
   final AuthenticationBloc authenticationBloc;
-  final UserRepository userRepository;
+  final UserRepository _userRepository = getIt.get<UserRepository>();
 
   LoginScreenBloc({
     @required this.authenticationBloc,
-    @required this.userRepository,
   })  : assert(authenticationBloc != null),
-        assert(userRepository != null),
         super(LoginScreenInitial());
 
   @override
@@ -34,7 +35,7 @@ class LoginScreenBloc extends Bloc<LoginScreenEvent, LoginScreenState> {
       yield LoginScreenInProgress();
 
       try {
-        final userToken = await userRepository.authenticate(
+        final userToken = await _userRepository.authenticate(
           username: event.username,
           password: event.password,
         );

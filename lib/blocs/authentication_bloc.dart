@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:meta/meta.dart';
+import 'package:get_it/get_it.dart';
 import 'package:bloc/bloc.dart';
 
 import 'package:huynhcodaidao/models/user_token.dart';
@@ -10,13 +10,13 @@ import 'package:huynhcodaidao/blocs/authentication_state.dart';
 
 import 'package:huynhcodaidao/repositories/user_repository.dart';
 
+final GetIt getIt = GetIt.instance;
+
 class AuthenticationBloc
     extends Bloc<AuthenticationEvent, AuthenticationState> {
-  final UserRepository userRepository;
+  final UserRepository _userRepository = getIt.get<UserRepository>();
 
-  AuthenticationBloc({@required this.userRepository})
-      : assert(userRepository != null),
-        super(AuthenticationInitial());
+  AuthenticationBloc() : super(AuthenticationInitial());
 
   @override
   Stream<AuthenticationState> mapEventToState(
@@ -24,7 +24,7 @@ class AuthenticationBloc
   ) async* {
     if (event is AuthenticationStarted) {
       yield AuthenticationInProgress();
-      final UserToken userToken = await userRepository.getToken();
+      final UserToken userToken = await _userRepository.getToken();
       await Future.delayed(Duration(seconds: 3));
 
       if (userToken != null) {
@@ -36,13 +36,13 @@ class AuthenticationBloc
 
     if (event is AuthenticationLoggedIn) {
       yield AuthenticationInProgress();
-      await userRepository.putToken(event.userToken);
+      await _userRepository.putToken(event.userToken);
       yield AuthenticationSuccess();
     }
 
     if (event is AuthenticationLoggedOut) {
       yield AuthenticationInProgress();
-      await userRepository.deleteToken();
+      await _userRepository.deleteToken();
       yield AuthenticationFailure();
     }
   }
