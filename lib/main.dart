@@ -1,5 +1,8 @@
 import 'dart:convert';
 
+import 'package:dio/dio.dart';
+import 'package:get_it/get_it.dart';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart' as Services;
 import 'package:flutter/material.dart';
@@ -13,29 +16,44 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:huynhcodaidao/models/user_token.dart';
 
+import 'package:huynhcodaidao/blocs/global_bloc_observer.dart';
 import 'package:huynhcodaidao/blocs/authentication_event.dart';
 import 'package:huynhcodaidao/blocs/authentication_state.dart';
 import 'package:huynhcodaidao/blocs/authentication_bloc.dart';
 import 'package:huynhcodaidao/blocs/login_screen_bloc.dart';
-import 'package:huynhcodaidao/blocs/global_bloc_observer.dart';
 
 import 'package:huynhcodaidao/repositories/user_repository.dart';
+import 'package:huynhcodaidao/repositories/menu_repository.dart';
+
+import 'package:huynhcodaidao/services/user_service.dart';
+import 'package:huynhcodaidao/services/menu_service.dart';
 
 import 'package:huynhcodaidao/screens/splash_screen.dart';
 import 'package:huynhcodaidao/screens/login_screen.dart';
 import 'package:huynhcodaidao/screens/home_screen.dart';
 
-final FlutterSecureStorage secureStorage = FlutterSecureStorage();
-final UserRepository userRepository = UserRepository();
+final GetIt getIt = GetIt.instance;
 
-void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
+Future setupGetIt() async {
+  getIt.registerLazySingleton<FlutterSecureStorage>(
+    () => FlutterSecureStorage(),
+  );
+  getIt.registerLazySingleton<UserService>(
+    () => UserService(Dio()),
+  );
+  getIt.registerLazySingleton<MenuService>(
+    () => MenuService(Dio()),
+  );
+  getIt.registerLazySingleton<UserRepository>(
+    () => UserRepository(),
+  );
+  getIt.registerLazySingleton<MenuRepository>(
+    () => MenuRepository(),
+  );
+}
 
-  await Services.SystemChrome.setPreferredOrientations([
-    Services.DeviceOrientation.portraitUp,
-    Services.DeviceOrientation.portraitDown,
-  ]);
-
+Future setupAppData() async {
+  final FlutterSecureStorage secureStorage = getIt.get<FlutterSecureStorage>();
   final String _appDataKey = await secureStorage.read(key: 'appDataKey');
   List<int> appDataKey;
 
@@ -57,16 +75,27 @@ void main() async {
     'appData',
     encryptionCipher: HiveAesCipher(appDataKey),
   );
+}
+
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  await Services.SystemChrome.setPreferredOrientations([
+    Services.DeviceOrientation.portraitUp,
+    Services.DeviceOrientation.portraitDown,
+  ]);
+
+  await setupGetIt();
+  await setupAppData();
 
   Bloc.observer = GlobalBlocObserver();
 
   runApp(
     DevicePreview(
       enabled: !kReleaseMode,
-      builder: (context) => BlocProvider<AuthenticationBloc>(
-        create: (context) {
-          return AuthenticationBloc(userRepository: userRepository)
-            ..add(AuthenticationStarted());
+      builder: (BuildContext context) => BlocProvider<AuthenticationBloc>(
+        create: (BuildContext context) {
+          return AuthenticationBloc()..add(AuthenticationStarted());
         },
         child: MyApp(),
       ),
@@ -102,7 +131,6 @@ class MyApp extends StatelessWidget {
 
                 return LoginScreenBloc(
                   authenticationBloc: authenticationBloc,
-                  userRepository: userRepository,
                 );
               },
               child: LoginScreen(),
