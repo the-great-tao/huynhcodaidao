@@ -13,5 +13,6 @@ abstract class MenuService {
   Future<Menu> get({
     @Path('slug') String slug,
     @Header('Authorization') String token,
+    @Query("page") int page,
   });
 }

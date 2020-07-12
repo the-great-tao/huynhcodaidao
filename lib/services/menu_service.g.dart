@@ -17,9 +17,9 @@ class _MenuService implements MenuService {
   String baseUrl;
 
   @override
-  get({slug, token}) async {
+  get({slug, token, page}) async {
     const _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{r'page': page};
     queryParameters.removeWhere((k, v) => v == null);
     final _data = <String, dynamic>{};
     final Response<Map<String, dynamic>> _result = await _dio.request(

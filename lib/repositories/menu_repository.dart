@@ -15,12 +15,14 @@ class MenuRepository {
 
   Future<Menu> get({
     @required String slug,
+    int page = 1,
   }) async {
     UserToken userToken = _appData.get('userToken');
 
     return _menuService.get(
-      token: 'Bearer ' + userToken.accessToken,
       slug: slug,
+      token: 'Bearer ' + userToken.accessToken,
+      page: page,
     );
   }
 }
