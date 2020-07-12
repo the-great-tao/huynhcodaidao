@@ -27,6 +27,7 @@ class WebviewScreen extends StatefulWidget {
 
 class _WebviewScreenState extends State<WebviewScreen> {
   final Box _appData = Hive.box('appData');
+
   WebViewController _webviewController;
 
   @override
