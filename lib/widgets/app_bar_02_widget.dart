@@ -37,6 +37,7 @@ class AppBar02Widget extends StatelessWidget implements PreferredSizeWidget {
             Expanded(
               child: Text(
                 title,
+                overflow: TextOverflow.ellipsis,
                 style: GoogleFonts.robotoSlab(
                   color: Colors.white,
                   fontSize: 50.sp,
