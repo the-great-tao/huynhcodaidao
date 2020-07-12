@@ -1,8 +1,9 @@
+import 'package:get_it/get_it.dart';
 import 'package:hive/hive.dart';
 
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:responsive_widgets/responsive_widgets.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 import 'package:huynhcodaidao/models/user_token.dart';
@@ -12,6 +13,8 @@ import 'package:huynhcodaidao/models/menu.dart';
 
 import 'package:huynhcodaidao/repositories/menu_repository.dart';
 
+final GetIt getIt = GetIt.instance;
+
 class MenuWidget extends StatefulWidget {
   @override
   State createState() => _MenuWidgetState();
@@ -19,7 +22,7 @@ class MenuWidget extends StatefulWidget {
 
 class _MenuWidgetState extends State<MenuWidget> {
   final Box _appData = Hive.box('appData');
-  final MenuRepository _menuRepository = MenuRepository();
+  final MenuRepository _menuRepository = getIt.get<MenuRepository>();
 
   Menu _menu;
   MenuItemList _menuItemList;
@@ -102,26 +105,25 @@ class _MenuWidgetState extends State<MenuWidget> {
                       ],
                     ),
                   ),
-//                  SizedBox(
-//                    width: 20.sp,
-//                  ),
-//                  Container(
-//                    padding:
-//                        EdgeInsets.fromLTRB(20.sp, 10.sp, 20.sp, 10.sp),
-//                    decoration: BoxDecoration(
-//                      color: Colors.red,
-//                      borderRadius: BorderRadius.circular(9999.sp),
-//                    ),
-//                    child: Center(
-//                      child: Text(
-//                        'Mới',
-//                        style: GoogleFonts.robotoSlab(
-//                          color: Colors.white,
-//                          fontSize: 32.sp,
-//                        ),
-//                      ),
-//                    ),
-//                  ),
+                  SizedBox(
+                    width: 20.sp,
+                  ),
+                  Container(
+                    padding: EdgeInsets.fromLTRB(20.sp, 10.sp, 20.sp, 10.sp),
+                    decoration: BoxDecoration(
+                      color: Colors.red,
+                      borderRadius: BorderRadius.circular(9999.sp),
+                    ),
+                    child: Center(
+                      child: Text(
+                        'Mới',
+                        style: GoogleFonts.robotoSlab(
+                          color: Colors.white,
+                          fontSize: 32.sp,
+                        ),
+                      ),
+                    ),
+                  ),
                   SizedBox(
                     width: 20.sp,
                   ),
