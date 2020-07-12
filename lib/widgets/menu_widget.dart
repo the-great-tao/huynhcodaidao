@@ -28,6 +28,7 @@ class _MenuWidgetState extends State<MenuWidget> {
   final FRefreshController _fRefreshController = FRefreshController();
 
   dynamic _state;
+  String _path = 'app/menu/danh-muc-chinh';
   Future<Menu> _menuFuture;
   Menu _menu;
   MenuItemList _menuItemList;
@@ -39,7 +40,7 @@ class _MenuWidgetState extends State<MenuWidget> {
   @override
   void initState() {
     _fRefreshController.setOnStateChangedCallback((state) => _state = state);
-    _menuFuture = _menuRepository.get(slug: 'danh-muc-chinh');
+    _menuFuture = _menuRepository.get(path: _path);
     super.initState();
   }
 
@@ -102,7 +103,7 @@ class _MenuWidgetState extends State<MenuWidget> {
               : null,
           footerHeight: 50.sp,
           onRefresh: () {
-            _menuFuture = _menuRepository.get(slug: 'danh-muc-chinh');
+            _menuFuture = _menuRepository.get(path: _path);
             _fRefreshController.finishRefresh();
             setState(() {
               print('finishRefresh');
@@ -110,7 +111,7 @@ class _MenuWidgetState extends State<MenuWidget> {
           },
           onLoad: () {
             _menuFuture = _menuRepository.get(
-              slug: 'danh-muc-chinh',
+              path: _path,
               page: _page + 1,
             );
             _fRefreshController.finishLoad();
@@ -122,6 +123,7 @@ class _MenuWidgetState extends State<MenuWidget> {
           child: Column(
             children: <Widget>[
               Container(
+                width: 1080.sp,
                 child: _banner == null
                     ? Container()
                     : Image.network(
@@ -161,17 +163,22 @@ class _MenuWidgetState extends State<MenuWidget> {
                     ),
                     child: Row(
                       children: <Widget>[
-                        Image.network(
-                          _menuItem.primaryIconUrl,
-                          headers: {
-                            'Authorization': 'Bearer ' +
-                                (_appData.get('userToken') as UserToken)
-                                    .accessToken,
-                          },
-                          width: 120.sp,
-                          height: 120.sp,
-                          fit: BoxFit.cover,
-                        ),
+                        _menuItem.primaryIconUrl == null
+                            ? Container(
+                                width: 120.sp,
+                                height: 120.sp,
+                              )
+                            : Image.network(
+                                _menuItem.primaryIconUrl,
+                                headers: {
+                                  'Authorization': 'Bearer ' +
+                                      (_appData.get('userToken') as UserToken)
+                                          .accessToken,
+                                },
+                                width: 120.sp,
+                                height: 120.sp,
+                                fit: BoxFit.cover,
+                              ),
                         SizedBox(
                           width: 40.sp,
                         ),
