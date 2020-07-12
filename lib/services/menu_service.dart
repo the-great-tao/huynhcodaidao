@@ -9,9 +9,9 @@ part 'menu_service.g.dart';
 abstract class MenuService {
   factory MenuService(Dio dio, {String baseUrl}) = _MenuService;
 
-  @GET('/app/menu/{slug}')
+  @GET('/{path}')
   Future<Menu> get({
-    @Path('slug') String slug,
+    @Path('path') String path,
     @Header('Authorization') String token,
     @Query("page") int page,
   });

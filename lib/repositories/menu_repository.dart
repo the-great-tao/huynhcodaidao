@@ -14,13 +14,13 @@ class MenuRepository {
   final MenuService _menuService = getIt.get<MenuService>();
 
   Future<Menu> get({
-    @required String slug,
+    @required String path,
     int page = 1,
   }) async {
     UserToken userToken = _appData.get('userToken');
 
     return _menuService.get(
-      slug: slug,
+      path: path,
       token: 'Bearer ' + userToken.accessToken,
       page: page,
     );
