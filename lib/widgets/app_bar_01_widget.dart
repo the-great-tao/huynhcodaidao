@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:responsive_widgets/responsive_widgets.dart';
 
 import 'package:huynhcodaidao/ui_components/linear_gradients.dart';
@@ -29,7 +30,7 @@ class AppBar01Widget extends StatelessWidget implements PreferredSizeWidget {
             ),
             Text(
               'HUỲNH CƠ ĐẠI ĐẠO TAM KỲ',
-              style: TextStyle(
+              style: GoogleFonts.robotoSlab(
                 color: Colors.white,
                 fontSize: 50.sp,
                 fontWeight: FontWeight.bold,
