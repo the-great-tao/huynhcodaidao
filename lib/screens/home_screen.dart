@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:responsive_widgets/responsive_widgets.dart';
 
 import 'package:huynhcodaidao/ui_components/linear_gradients.dart';
@@ -54,23 +55,38 @@ class _HomeScreenState extends State<HomeScreen> {
               items: [
                 BottomNavigationBarItem(
                   icon: new Icon(Icons.home),
-                  title: new Text('Trang chủ'),
+                  title: new Text(
+                    'Trang chủ',
+                    style: GoogleFonts.robotoSlab(),
+                  ),
                 ),
                 BottomNavigationBarItem(
                   icon: new Icon(Icons.rss_feed),
-                  title: new Text('Thông báo'),
+                  title: new Text(
+                    'Thông báo',
+                    style: GoogleFonts.robotoSlab(),
+                  ),
                 ),
                 BottomNavigationBarItem(
                   icon: Icon(Icons.notifications_active),
-                  title: Text('Chuông tu'),
+                  title: Text(
+                    'Chuông tu',
+                    style: GoogleFonts.robotoSlab(),
+                  ),
                 ),
                 BottomNavigationBarItem(
                   icon: new Icon(Icons.music_note),
-                  title: new Text('Nhạc niệm'),
+                  title: new Text(
+                    'Nhạc niệm',
+                    style: GoogleFonts.robotoSlab(),
+                  ),
                 ),
                 BottomNavigationBarItem(
                   icon: Icon(Icons.settings),
-                  title: Text('Cài đặt'),
+                  title: Text(
+                    'Cài đặt',
+                    style: GoogleFonts.robotoSlab(),
+                  ),
                 ),
               ],
               onTap: (index) => setState(() => _currentIndex = index),
