@@ -18,6 +18,15 @@ import 'package:huynhcodaidao/repositories/menu_repository.dart';
 final GetIt getIt = GetIt.instance;
 
 class MenuWidget extends StatefulWidget {
+  final String path;
+  final bool fullUrl;
+
+  const MenuWidget({
+    Key key,
+    this.path = '/app/menu/danh-muc-chinh',
+    this.fullUrl = false,
+  }) : super(key: key);
+
   @override
   State createState() => _MenuWidgetState();
 }
@@ -28,7 +37,6 @@ class _MenuWidgetState extends State<MenuWidget> {
   final FRefreshController _fRefreshController = FRefreshController();
 
   dynamic _state;
-  String _path = '/app/menu/danh-muc-chinh';
   Future<Menu> _menuFuture;
   Menu _menu;
   MenuItemList _menuItemList;
@@ -40,7 +48,12 @@ class _MenuWidgetState extends State<MenuWidget> {
   @override
   void initState() {
     _fRefreshController.setOnStateChangedCallback((state) => _state = state);
-    _menuFuture = _menuRepository.get(path: _path);
+
+    _menuFuture = _menuRepository.get(
+      path: widget.path,
+      fullUrl: widget.fullUrl,
+    );
+
     super.initState();
   }
 
@@ -103,38 +116,41 @@ class _MenuWidgetState extends State<MenuWidget> {
               : null,
           footerHeight: 50.sp,
           onRefresh: () {
-            _menuFuture = _menuRepository.get(path: _path);
+            _menuFuture = _menuRepository.get(
+              path: widget.path,
+              fullUrl: widget.fullUrl,
+            );
             _fRefreshController.finishRefresh();
-            setState(() {
-              print('finishRefresh');
-            });
+            setState(() {});
           },
           onLoad: () {
             _menuFuture = _menuRepository.get(
-              path: _path,
+              path: widget.path,
               page: _page + 1,
+              fullUrl: widget.fullUrl,
             );
             _fRefreshController.finishLoad();
-            setState(() {
-              print('finishLoad');
-            });
+            setState(() {});
           },
           shouldLoad: _shouldLoad,
           child: Column(
             children: <Widget>[
-              Container(
-                width: 1080.sp,
-                child: _banner == null
-                    ? Container()
-                    : Image.network(
-                        _banner.url,
-                        headers: {
-                          'Authorization': 'Bearer ' +
-                              (_appData.get('userToken') as UserToken)
-                                  .accessToken,
-                        },
-                        fit: BoxFit.fitWidth,
-                      ),
+              GestureDetector(
+                onTap: () => print(_banner != null ? _banner.actionUrl : null),
+                child: Container(
+                  width: 1080.sp,
+                  child: _banner == null
+                      ? Container()
+                      : Image.network(
+                          _banner.url,
+                          headers: {
+                            'Authorization': 'Bearer ' +
+                                (_appData.get('userToken') as UserToken)
+                                    .accessToken,
+                          },
+                          fit: BoxFit.fitWidth,
+                        ),
+                ),
               ),
               ListView.builder(
                 primary: false,
@@ -146,109 +162,112 @@ class _MenuWidgetState extends State<MenuWidget> {
                 itemBuilder: (BuildContext context, int index) {
                   MenuItem _menuItem = _menuItems[index];
 
-                  return Container(
-                    padding: EdgeInsets.all(40.sp),
-                    margin: EdgeInsets.fromLTRB(10.sp, 5.sp, 10.sp, 5.sp),
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(10.sp),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.black12,
-                          blurRadius: 2.sp,
-                          spreadRadius: 2.sp,
-                          offset: Offset(0.sp, 2.sp),
-                        ),
-                      ],
-                    ),
-                    child: Row(
-                      children: <Widget>[
-                        _menuItem.primaryIconUrl == null
-                            ? Container(
-                                width: 120.sp,
-                                height: 120.sp,
-                              )
-                            : Image.network(
-                                _menuItem.primaryIconUrl,
-                                headers: {
-                                  'Authorization': 'Bearer ' +
-                                      (_appData.get('userToken') as UserToken)
-                                          .accessToken,
-                                },
-                                width: 120.sp,
-                                height: 120.sp,
-                                fit: BoxFit.cover,
-                              ),
-                        SizedBox(
-                          width: 40.sp,
-                        ),
-                        Expanded(
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                _menuItem.title,
-                                style: GoogleFonts.robotoSlab(
-                                  fontSize: 48.sp,
-                                  fontWeight: FontWeight.bold,
+                  return GestureDetector(
+                    onTap: () => print(_menuItem.actionUrl),
+                    child: Container(
+                      padding: EdgeInsets.all(40.sp),
+                      margin: EdgeInsets.fromLTRB(10.sp, 5.sp, 10.sp, 5.sp),
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(10.sp),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black12,
+                            blurRadius: 2.sp,
+                            spreadRadius: 2.sp,
+                            offset: Offset(0.sp, 2.sp),
+                          ),
+                        ],
+                      ),
+                      child: Row(
+                        children: <Widget>[
+                          _menuItem.primaryIconUrl == null
+                              ? Container(
+                                  width: 120.sp,
+                                  height: 120.sp,
+                                )
+                              : Image.network(
+                                  _menuItem.primaryIconUrl,
+                                  headers: {
+                                    'Authorization': 'Bearer ' +
+                                        (_appData.get('userToken') as UserToken)
+                                            .accessToken,
+                                  },
+                                  width: 120.sp,
+                                  height: 120.sp,
+                                  fit: BoxFit.cover,
                                 ),
-                              ),
-                              _menuItem.description == null
-                                  ? Container()
-                                  : Text(
-                                      _menuItem.description,
-                                      style: GoogleFonts.robotoSlab(
-                                        fontSize: 38.sp,
-                                        fontStyle: FontStyle.italic,
+                          SizedBox(
+                            width: 40.sp,
+                          ),
+                          Expanded(
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  _menuItem.title,
+                                  style: GoogleFonts.robotoSlab(
+                                    fontSize: 48.sp,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                                _menuItem.description == null
+                                    ? Container()
+                                    : Text(
+                                        _menuItem.description,
+                                        style: GoogleFonts.robotoSlab(
+                                          fontSize: 38.sp,
+                                          fontStyle: FontStyle.italic,
+                                        ),
                                       ),
-                                    ),
-                            ],
+                              ],
+                            ),
                           ),
-                        ),
-                        SizedBox(
-                          width: 20.sp,
-                        ),
-                        Container(
-                          padding:
-                              EdgeInsets.fromLTRB(20.sp, 10.sp, 20.sp, 10.sp),
-                          decoration: BoxDecoration(
-                            color: Colors.red,
-                            borderRadius: BorderRadius.circular(9999.sp),
+                          SizedBox(
+                            width: 20.sp,
                           ),
-                          child: Center(
-                            child: Text(
-                              'Mới',
-                              style: GoogleFonts.robotoSlab(
-                                color: Colors.white,
-                                fontSize: 32.sp,
+                          Container(
+                            padding:
+                                EdgeInsets.fromLTRB(20.sp, 10.sp, 20.sp, 10.sp),
+                            decoration: BoxDecoration(
+                              color: Colors.red,
+                              borderRadius: BorderRadius.circular(9999.sp),
+                            ),
+                            child: Center(
+                              child: Text(
+                                'Mới',
+                                style: GoogleFonts.robotoSlab(
+                                  color: Colors.white,
+                                  fontSize: 32.sp,
+                                ),
                               ),
                             ),
                           ),
-                        ),
-                        SizedBox(
-                          width: 20.sp,
-                        ),
-                        _menuItem.secondaryIconUrl == null
-                            ? SizedBox(
-                                width: 100.sp,
-                                height: 100.sp,
-                              )
-                            : Image.network(
-                                _menuItem.primaryIconUrl,
-                                headers: {
-                                  'Authorization': 'Bearer ' +
-                                      (_appData.get('userToken') as UserToken)
-                                          .accessToken,
-                                },
-                                width: 100.sp,
-                                height: 100.sp,
-                                fit: BoxFit.cover,
-                              ),
-                        SizedBox(
-                          width: 20.sp,
-                        ),
-                      ],
+                          SizedBox(
+                            width: 20.sp,
+                          ),
+                          _menuItem.secondaryIconUrl == null
+                              ? SizedBox(
+                                  width: 100.sp,
+                                  height: 100.sp,
+                                )
+                              : Image.network(
+                                  _menuItem.primaryIconUrl,
+                                  headers: {
+                                    'Authorization': 'Bearer ' +
+                                        (_appData.get('userToken') as UserToken)
+                                            .accessToken,
+                                  },
+                                  width: 100.sp,
+                                  height: 100.sp,
+                                  fit: BoxFit.cover,
+                                ),
+                          SizedBox(
+                            width: 20.sp,
+                          ),
+                        ],
+                      ),
                     ),
                   );
                 },
