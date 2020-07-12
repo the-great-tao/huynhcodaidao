@@ -9,7 +9,7 @@ part 'menu_service.g.dart';
 abstract class MenuService {
   factory MenuService(Dio dio, {String baseUrl}) = _MenuService;
 
-  @GET('/{path}')
+  @GET('{path}')
   Future<Menu> get({
     @Path('path') String path,
     @Header('Authorization') String token,

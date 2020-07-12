@@ -28,7 +28,7 @@ class _MenuWidgetState extends State<MenuWidget> {
   final FRefreshController _fRefreshController = FRefreshController();
 
   dynamic _state;
-  String _path = 'app/menu/danh-muc-chinh';
+  String _path = '/app/menu/danh-muc-chinh';
   Future<Menu> _menuFuture;
   Menu _menu;
   MenuItemList _menuItemList;
