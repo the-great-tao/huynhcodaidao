@@ -15,15 +15,17 @@ import 'package:huynhcodaidao/models/banner.dart' as BannerModel;
 
 import 'package:huynhcodaidao/repositories/menu_repository.dart';
 
+import 'package:huynhcodaidao/services/router_service.dart';
+
 final GetIt getIt = GetIt.instance;
 
 class MenuWidget extends StatefulWidget {
-  final String path;
+  final String actionUrl;
   final bool fullUrl;
 
   const MenuWidget({
     Key key,
-    this.path = '/app/menu/danh-muc-chinh',
+    this.actionUrl = '/app/menu/danh-muc-chinh',
     this.fullUrl = false,
   }) : super(key: key);
 
@@ -50,7 +52,7 @@ class _MenuWidgetState extends State<MenuWidget> {
     _fRefreshController.setOnStateChangedCallback((state) => _state = state);
 
     _menuFuture = _menuRepository.get(
-      path: widget.path,
+      path: widget.actionUrl,
       fullUrl: widget.fullUrl,
     );
 
@@ -117,7 +119,7 @@ class _MenuWidgetState extends State<MenuWidget> {
           footerHeight: 50.sp,
           onRefresh: () {
             _menuFuture = _menuRepository.get(
-              path: widget.path,
+              path: widget.actionUrl,
               fullUrl: widget.fullUrl,
             );
             _fRefreshController.finishRefresh();
@@ -125,7 +127,7 @@ class _MenuWidgetState extends State<MenuWidget> {
           },
           onLoad: () {
             _menuFuture = _menuRepository.get(
-              path: widget.path,
+              path: widget.actionUrl,
               page: _page + 1,
               fullUrl: widget.fullUrl,
             );
@@ -136,7 +138,15 @@ class _MenuWidgetState extends State<MenuWidget> {
           child: Column(
             children: <Widget>[
               GestureDetector(
-                onTap: () => print(_banner != null ? _banner.actionUrl : null),
+                onTap: () {
+                  print(_banner != null ? _banner.actionUrl : null);
+                  RouterService.navigateTo(
+                    context: context,
+                    actionUrl: _banner.actionUrl,
+                    actionTypeName: _banner.actionTypeName,
+                    actionTitle: _banner.actionTitle,
+                  );
+                },
                 child: Container(
                   width: 1080.sp,
                   child: _banner == null
@@ -163,7 +173,15 @@ class _MenuWidgetState extends State<MenuWidget> {
                   MenuItem _menuItem = _menuItems[index];
 
                   return GestureDetector(
-                    onTap: () => print(_menuItem.actionUrl),
+                    onTap: () {
+                      print(_menuItem.actionUrl);
+                      RouterService.navigateTo(
+                        context: context,
+                        actionUrl: _menuItem.actionUrl,
+                        actionTypeName: _menuItem.actionTypeName,
+                        actionTitle: _menuItem.actionTitle,
+                      );
+                    },
                     child: Container(
                       padding: EdgeInsets.all(40.sp),
                       margin: EdgeInsets.fromLTRB(10.sp, 5.sp, 10.sp, 5.sp),
