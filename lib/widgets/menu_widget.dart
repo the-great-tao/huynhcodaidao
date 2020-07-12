@@ -1,16 +1,15 @@
-import 'package:flutter/cupertino.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:hive/hive.dart';
-import 'package:logger/logger.dart';
+
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:responsive_widgets/responsive_widgets.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:frefresh/frefresh.dart';
 
 import 'package:huynhcodaidao/models/user_token.dart';
 import 'package:huynhcodaidao/models/menu_item.dart';
 import 'package:huynhcodaidao/models/menu_item_list.dart';
 import 'package:huynhcodaidao/models/menu.dart';
+
 import 'package:huynhcodaidao/repositories/menu_repository.dart';
 
 class MenuWidget extends StatefulWidget {
@@ -20,9 +19,7 @@ class MenuWidget extends StatefulWidget {
 
 class _MenuWidgetState extends State<MenuWidget> {
   final Box _appData = Hive.box('appData');
-  final Logger _logger = Logger();
   final MenuRepository _menuRepository = MenuRepository();
-  final FRefreshController _fRefreshController = FRefreshController();
 
   Menu _menu;
   MenuItemList _menuItemList;
@@ -50,33 +47,9 @@ class _MenuWidgetState extends State<MenuWidget> {
           itemCount: _menuItemList.total,
           itemBuilder: (BuildContext context, int index) {
             MenuItem _menuItem = _menuItems[index];
-//            _logger.i(_menuItem.toJson());
-
-            List<Widget> titles = [
-              Text(
-                _menuItem.title,
-                style: GoogleFonts.robotoSlab(
-                  fontSize: 50.sp,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              _menuItem.description == null
-                  ? Container()
-                  : Text(
-                      _menuItem.description,
-                      style: GoogleFonts.robotoSlab(
-                        fontSize: 40.sp,
-                        fontStyle: FontStyle.italic,
-                      ),
-                    ),
-            ];
 
             return Container(
-//              height: 180.sp,
-              padding: EdgeInsets.only(
-                top: 40.sp,
-                bottom: 40.sp,
-              ),
+              padding: EdgeInsets.all(40.sp),
               margin: EdgeInsets.fromLTRB(10.sp, 5.sp, 10.sp, 5.sp),
               decoration: BoxDecoration(
                 color: Colors.white,
@@ -92,9 +65,6 @@ class _MenuWidgetState extends State<MenuWidget> {
               ),
               child: Row(
                 children: <Widget>[
-                  SizedBox(
-                    width: 40.sp,
-                  ),
                   Image.network(
                     _menuItem.primaryIconUrl,
                     headers: {
@@ -109,41 +79,56 @@ class _MenuWidgetState extends State<MenuWidget> {
                     width: 40.sp,
                   ),
                   Expanded(
-                    child: Row(
-                      children: <Widget>[
-                        Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: titles,
-                        ),
-                        Spacer(),
-                        Container(
-                          padding:
-                              EdgeInsets.fromLTRB(20.sp, 10.sp, 20.sp, 10.sp),
-                          decoration: BoxDecoration(
-                            color: Colors.red,
-                            borderRadius: BorderRadius.circular(9999.sp),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          _menuItem.title,
+                          style: GoogleFonts.robotoSlab(
+                            fontSize: 48.sp,
+                            fontWeight: FontWeight.bold,
                           ),
-                          child: Center(
-                            child: Text(
-                              'Mới',
-                              style: GoogleFonts.robotoSlab(
-                                color: Colors.white,
-                                fontSize: 36.sp,
+                        ),
+                        _menuItem.description == null
+                            ? Container()
+                            : Text(
+                                _menuItem.description,
+                                style: GoogleFonts.robotoSlab(
+                                  fontSize: 38.sp,
+                                  fontStyle: FontStyle.italic,
+                                ),
                               ),
-                            ),
-                          ),
-                        ),
                       ],
                     ),
                   ),
+//                  SizedBox(
+//                    width: 20.sp,
+//                  ),
+//                  Container(
+//                    padding:
+//                        EdgeInsets.fromLTRB(20.sp, 10.sp, 20.sp, 10.sp),
+//                    decoration: BoxDecoration(
+//                      color: Colors.red,
+//                      borderRadius: BorderRadius.circular(9999.sp),
+//                    ),
+//                    child: Center(
+//                      child: Text(
+//                        'Mới',
+//                        style: GoogleFonts.robotoSlab(
+//                          color: Colors.white,
+//                          fontSize: 32.sp,
+//                        ),
+//                      ),
+//                    ),
+//                  ),
                   SizedBox(
                     width: 20.sp,
                   ),
                   _menuItem.secondaryIconUrl == null
                       ? SizedBox(
-                          width: 120.sp,
-                          height: 120.sp,
+                          width: 100.sp,
+                          height: 100.sp,
                         )
                       : Image.network(
                           _menuItem.primaryIconUrl,
@@ -152,8 +137,8 @@ class _MenuWidgetState extends State<MenuWidget> {
                                 (_appData.get('userToken') as UserToken)
                                     .accessToken,
                           },
-                          width: 120.sp,
-                          height: 120.sp,
+                          width: 100.sp,
+                          height: 100.sp,
                           fit: BoxFit.cover,
                         ),
                   SizedBox(

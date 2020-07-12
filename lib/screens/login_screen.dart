@@ -1,9 +1,8 @@
 import 'package:dio/dio.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:responsive_widgets/responsive_widgets.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:huynhcodaidao/blocs/login_screen_event.dart';
 import 'package:huynhcodaidao/blocs/login_screen_state.dart';
