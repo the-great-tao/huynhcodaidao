@@ -33,6 +33,7 @@ import 'package:huynhcodaidao/screens/splash_screen.dart';
 import 'package:huynhcodaidao/screens/login_screen.dart';
 import 'package:huynhcodaidao/screens/home_screen.dart';
 import 'package:huynhcodaidao/screens/menu_screen.dart';
+import 'package:huynhcodaidao/screens/webview_screen.dart';
 
 final GetIt getIt = GetIt.instance;
 
@@ -106,6 +107,24 @@ Future setupRouter() async {
       actionTitle = utf8.decode(base64Url.decode(actionTitle));
 
       return MenuScreen(
+        actionUrl: actionUrl,
+        actionTitle: actionTitle,
+      );
+    }),
+  );
+
+  router.define(
+    '/webview/',
+    transitionType: TransitionType.inFromRight,
+    handler: Handler(
+        handlerFunc: (BuildContext context, Map<String, dynamic> params) {
+      String actionUrl = params['actionUrl'][0];
+      String actionTitle = params['actionTitle'][0];
+
+      actionUrl = utf8.decode(base64Url.decode(actionUrl));
+      actionTitle = utf8.decode(base64Url.decode(actionTitle));
+
+      return WebviewScreen(
         actionUrl: actionUrl,
         actionTitle: actionTitle,
       );
