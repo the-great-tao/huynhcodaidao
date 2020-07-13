@@ -149,7 +149,7 @@ class _MenuWidgetState extends State<MenuWidget> {
                 },
                 child: Container(
                   width: 1080.sp,
-                  padding: EdgeInsets.only(bottom: 8.sp),
+                  padding: EdgeInsets.only(bottom: 16.sp),
                   child: _banner == null
                       ? Container()
                       : Image.network(
@@ -191,7 +191,7 @@ class _MenuWidgetState extends State<MenuWidget> {
                     },
                     child: Container(
                       padding: EdgeInsets.fromLTRB(40.sp, 40.sp, 20.sp, 40.sp),
-                      margin: EdgeInsets.fromLTRB(16.sp, 8.sp, 16.sp, 8.sp),
+                      margin: EdgeInsets.fromLTRB(16.sp, 0, 16.sp, 16.sp),
                       decoration: BoxDecoration(
                         color: Colors.white,
                         borderRadius: BorderRadius.circular(16.sp),
