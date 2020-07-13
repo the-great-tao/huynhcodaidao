@@ -25,15 +25,18 @@ import 'package:huynhcodaidao/blocs/login_screen_bloc.dart';
 
 import 'package:huynhcodaidao/repositories/user_repository.dart';
 import 'package:huynhcodaidao/repositories/menu_repository.dart';
+import 'package:huynhcodaidao/repositories/photo_album_collection_repository.dart';
 
 import 'package:huynhcodaidao/services/user_service.dart';
 import 'package:huynhcodaidao/services/menu_service.dart';
+import 'package:huynhcodaidao/services/photo_album_collection_service.dart';
 
 import 'package:huynhcodaidao/screens/splash_screen.dart';
 import 'package:huynhcodaidao/screens/login_screen.dart';
 import 'package:huynhcodaidao/screens/home_screen.dart';
 import 'package:huynhcodaidao/screens/menu_screen.dart';
 import 'package:huynhcodaidao/screens/webview_screen.dart';
+import 'package:huynhcodaidao/screens/photo_album_collection_screen.dart';
 
 final GetIt getIt = GetIt.instance;
 
@@ -41,18 +44,27 @@ Future setupGetIt() async {
   getIt.registerLazySingleton<FlutterSecureStorage>(
     () => FlutterSecureStorage(),
   );
+
   getIt.registerLazySingleton<UserService>(
     () => UserService(Dio()),
   );
   getIt.registerLazySingleton<MenuService>(
     () => MenuService(Dio()),
   );
+  getIt.registerLazySingleton<PhotoAlbumCollectionService>(
+    () => PhotoAlbumCollectionService(Dio()),
+  );
+
   getIt.registerLazySingleton<UserRepository>(
     () => UserRepository(),
   );
   getIt.registerLazySingleton<MenuRepository>(
     () => MenuRepository(),
   );
+  getIt.registerLazySingleton<PhotoAlbumCollectionRepository>(
+    () => PhotoAlbumCollectionRepository(),
+  );
+
   getIt.registerLazySingleton<Router>(
     () => Router(),
   );
@@ -125,6 +137,24 @@ Future setupRouter() async {
       actionTitle = utf8.decode(base64Url.decode(actionTitle));
 
       return WebviewScreen(
+        actionUrl: actionUrl,
+        actionTitle: actionTitle,
+      );
+    }),
+  );
+
+  router.define(
+    '/photo_album_list/',
+    transitionType: TransitionType.fadeIn,
+    handler: Handler(
+        handlerFunc: (BuildContext context, Map<String, dynamic> params) {
+      String actionUrl = params['actionUrl'][0];
+      String actionTitle = params['actionTitle'][0];
+
+      actionUrl = utf8.decode(base64Url.decode(actionUrl));
+      actionTitle = utf8.decode(base64Url.decode(actionTitle));
+
+      return PhotoAlbumCollectionScreen(
         actionUrl: actionUrl,
         actionTitle: actionTitle,
       );
