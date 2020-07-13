@@ -149,6 +149,7 @@ class _MenuWidgetState extends State<MenuWidget> {
                 },
                 child: Container(
                   width: 1080.sp,
+                  padding: EdgeInsets.only(bottom: 8.sp),
                   child: _banner == null
                       ? Container()
                       : Image.network(
@@ -172,6 +173,12 @@ class _MenuWidgetState extends State<MenuWidget> {
                 itemBuilder: (BuildContext context, int index) {
                   MenuItem _menuItem = _menuItems[index];
 
+                  if (_menuItem.primaryIconUrl == null) {
+                    if (_menu != null && _menu.defaultIconUrl != null) {
+                      _menuItem.primaryIconUrl = _menu.defaultIconUrl;
+                    }
+                  }
+
                   return GestureDetector(
                     onTap: () {
                       print(_menuItem.actionUrl);
@@ -183,24 +190,24 @@ class _MenuWidgetState extends State<MenuWidget> {
                       );
                     },
                     child: Container(
-                      padding: EdgeInsets.all(40.sp),
-                      margin: EdgeInsets.fromLTRB(10.sp, 5.sp, 10.sp, 5.sp),
+                      padding: EdgeInsets.fromLTRB(40.sp, 40.sp, 20.sp, 40.sp),
+                      margin: EdgeInsets.fromLTRB(16.sp, 8.sp, 16.sp, 8.sp),
                       decoration: BoxDecoration(
                         color: Colors.white,
-                        borderRadius: BorderRadius.circular(10.sp),
+                        borderRadius: BorderRadius.circular(16.sp),
                         boxShadow: [
                           BoxShadow(
                             color: Colors.black12,
-                            blurRadius: 2.sp,
-                            spreadRadius: 2.sp,
-                            offset: Offset(0.sp, 2.sp),
+                            blurRadius: 4.sp,
+                            spreadRadius: 4.sp,
                           ),
                         ],
                       ),
                       child: Row(
                         children: <Widget>[
                           _menuItem.primaryIconUrl == null
-                              ? Container(
+                              ? Image.asset(
+                                  'assets/default_menu_item_icon.png',
                                   width: 120.sp,
                                   height: 120.sp,
                                 )
@@ -266,9 +273,16 @@ class _MenuWidgetState extends State<MenuWidget> {
                             width: 20.sp,
                           ),
                           _menuItem.secondaryIconUrl == null
-                              ? SizedBox(
+                              ? Container(
                                   width: 100.sp,
                                   height: 100.sp,
+                                  child: Center(
+                                    child: Icon(
+                                      Icons.navigate_next,
+                                      color: Colors.amberAccent,
+                                      size: 100.sp,
+                                    ),
+                                  ),
                                 )
                               : Image.network(
                                   _menuItem.primaryIconUrl,
@@ -281,9 +295,6 @@ class _MenuWidgetState extends State<MenuWidget> {
                                   height: 100.sp,
                                   fit: BoxFit.cover,
                                 ),
-                          SizedBox(
-                            width: 20.sp,
-                          ),
                         ],
                       ),
                     ),
