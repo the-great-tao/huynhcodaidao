@@ -44,10 +44,10 @@ class AppBar01Widget extends StatelessWidget implements PreferredSizeWidget {
         gradient: LinearGradients.main,
         boxShadow: [
           BoxShadow(
-            color: Colors.black54,
-            blurRadius: 10.h,
-            spreadRadius: 5.h,
-            offset: Offset(0, 5.h),
+            color: Colors.black26,
+            blurRadius: 8.h,
+            spreadRadius: 4.h,
+            offset: Offset(0, 4.h),
           ),
         ],
       ),
