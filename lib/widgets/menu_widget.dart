@@ -13,6 +13,8 @@ import 'package:huynhcodaidao/models/menu_item_list.dart';
 import 'package:huynhcodaidao/models/menu.dart';
 import 'package:huynhcodaidao/models/banner.dart' as BannerModel;
 
+import 'package:huynhcodaidao/widgets/label_widget.dart';
+
 import 'package:huynhcodaidao/repositories/menu_repository.dart';
 
 import 'package:huynhcodaidao/services/router_service.dart';
@@ -252,23 +254,9 @@ class _MenuWidgetState extends State<MenuWidget> {
                           SizedBox(
                             width: 20.sp,
                           ),
-                          Container(
-                            padding:
-                                EdgeInsets.fromLTRB(20.sp, 10.sp, 20.sp, 10.sp),
-                            decoration: BoxDecoration(
-                              color: Colors.red,
-                              borderRadius: BorderRadius.circular(9999.sp),
-                            ),
-                            child: Center(
-                              child: Text(
-                                'Mới',
-                                style: GoogleFonts.robotoSlab(
-                                  color: Colors.white,
-                                  fontSize: 32.sp,
-                                ),
-                              ),
-                            ),
-                          ),
+                          _menuItem.labelUrl == null
+                              ? Container()
+                              : LabelWidget(labelUrl: _menuItem.labelUrl),
                           SizedBox(
                             width: 20.sp,
                           ),
