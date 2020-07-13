@@ -1,6 +1,6 @@
 import 'package:json_annotation/json_annotation.dart';
 
-import 'package:huynhcodaidao/models/photo_album.dart';
+import 'package:huynhcodaidao/models/photo_album_list_item.dart';
 
 part 'photo_album_list.g.dart';
 
@@ -40,7 +40,7 @@ class PhotoAlbumList {
   String nextPageUrl;
 
   @JsonKey(name: 'data')
-  List<PhotoAlbum> data;
+  List<PhotoAlbumListItem> data;
 
   PhotoAlbumList({
     this.currentPage,

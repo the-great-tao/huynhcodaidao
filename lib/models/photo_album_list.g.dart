@@ -20,8 +20,9 @@ PhotoAlbumList _$PhotoAlbumListFromJson(Map<String, dynamic> json) {
     prevPageUrl: json['prev_page_url'] as String,
     nextPageUrl: json['next_page_url'] as String,
     data: (json['data'] as List)
-        ?.map((e) =>
-            e == null ? null : PhotoAlbum.fromJson(e as Map<String, dynamic>))
+        ?.map((e) => e == null
+            ? null
+            : PhotoAlbumListItem.fromJson(e as Map<String, dynamic>))
         ?.toList(),
   );
 }

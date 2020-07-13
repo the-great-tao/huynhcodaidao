@@ -1,13 +1,13 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'photo_album.dart';
+part of 'photo_album_list_item.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-PhotoAlbum _$PhotoAlbumFromJson(Map<String, dynamic> json) {
-  return PhotoAlbum(
+PhotoAlbumListItem _$PhotoAlbumListItemFromJson(Map<String, dynamic> json) {
+  return PhotoAlbumListItem(
     id: json['id'] as int,
     title: json['title'] as String,
     slug: json['slug'] as String,
@@ -18,7 +18,7 @@ PhotoAlbum _$PhotoAlbumFromJson(Map<String, dynamic> json) {
   );
 }
 
-Map<String, dynamic> _$PhotoAlbumToJson(PhotoAlbum instance) =>
+Map<String, dynamic> _$PhotoAlbumListItemToJson(PhotoAlbumListItem instance) =>
     <String, dynamic>{
       'id': instance.id,
       'title': instance.title,

@@ -8,7 +8,7 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:frefresh/frefresh.dart';
 
 import 'package:huynhcodaidao/models/user_token.dart';
-import 'package:huynhcodaidao/models/photo_album.dart';
+import 'package:huynhcodaidao/models/photo_album_list_item.dart';
 import 'package:huynhcodaidao/models/photo_album_list.dart';
 import 'package:huynhcodaidao/models/photo_album_collection.dart';
 import 'package:huynhcodaidao/models/banner.dart' as BannerModel;
@@ -44,7 +44,7 @@ class _PhotoAlbumCollectionWidgetState
   Future<PhotoAlbumCollection> _photoAlbumCollectionFuture;
   PhotoAlbumCollection _photoAlbumCollection;
   PhotoAlbumList _photoAlbumList;
-  List<PhotoAlbum> _photoAlbums;
+  List<PhotoAlbumListItem> _photoAlbumListItems;
   BannerModel.Banner _banner;
   int _page = 1;
   bool _shouldLoad = false;
@@ -80,7 +80,7 @@ class _PhotoAlbumCollectionWidgetState
           if (_state == null || _state is RefreshState) {
             _photoAlbumCollection = snapshot.data;
             _photoAlbumList = _photoAlbumCollection.photoAlbumList;
-            _photoAlbums = _photoAlbumList.data;
+            _photoAlbumListItems = _photoAlbumList.data;
             _banner = _photoAlbumCollection.banner;
 
             _page = 1;
@@ -91,11 +91,12 @@ class _PhotoAlbumCollectionWidgetState
             PhotoAlbumCollection _nextPhotoAlbumCollection = snapshot.data;
             PhotoAlbumList _nextPhotoAlbumList =
                 _nextPhotoAlbumCollection.photoAlbumList;
-            List<PhotoAlbum> _nextPhotoAlbums = _nextPhotoAlbumList.data;
+            List<PhotoAlbumListItem> _nextPhotoAlbumListItems =
+                _nextPhotoAlbumList.data;
 
-            if (_nextPhotoAlbums.length != 0) {
+            if (_nextPhotoAlbumListItems.length != 0) {
               _photoAlbumList.to = _nextPhotoAlbumList.to;
-              _photoAlbums.addAll(_nextPhotoAlbums);
+              _photoAlbumListItems.addAll(_nextPhotoAlbumListItems);
             }
 
             _page++;
@@ -175,28 +176,30 @@ class _PhotoAlbumCollectionWidgetState
                   crossAxisCount: 2,
                   childAspectRatio: 0.75,
                 ),
-                itemCount: _photoAlbums == null || _photoAlbums.length == 0
+                itemCount: _photoAlbumListItems == null ||
+                        _photoAlbumListItems.length == 0
                     ? 0
                     : _photoAlbumList.to - _photoAlbumList.from + 1,
                 itemBuilder: (BuildContext context, int index) {
-                  PhotoAlbum _photoAlbum = _photoAlbums[index];
+                  PhotoAlbumListItem _photoAlbumListItem =
+                      _photoAlbumListItems[index];
 
-                  if (_photoAlbum.coverUrl == null) {
+                  if (_photoAlbumListItem.coverUrl == null) {
                     if (_photoAlbumCollection != null &&
                         _photoAlbumCollection.defaultIconUrl != null) {
-                      _photoAlbum.coverUrl =
+                      _photoAlbumListItem.coverUrl =
                           _photoAlbumCollection.defaultIconUrl;
                     }
                   }
 
                   return GestureDetector(
                     onTap: () {
-                      print(_photoAlbum.actionUrl);
+                      print(_photoAlbumListItem.actionUrl);
                       RouterService.navigateTo(
                         context: context,
-                        actionUrl: _photoAlbum.actionUrl,
-                        actionTypeName: _photoAlbum.actionTypeName,
-                        actionTitle: _photoAlbum.actionTitle,
+                        actionUrl: _photoAlbumListItem.actionUrl,
+                        actionTypeName: _photoAlbumListItem.actionTypeName,
+                        actionTitle: _photoAlbumListItem.actionTitle,
                       );
                     },
                     child: Container(
@@ -217,14 +220,14 @@ class _PhotoAlbumCollectionWidgetState
                       ),
                       child: Column(
                         children: <Widget>[
-                          _photoAlbum.coverUrl == null
+                          _photoAlbumListItem.coverUrl == null
                               ? Image.asset(
                                   'assets/default_menu_item_icon.png',
                                   width: 400.sp,
                                   height: 400.sp,
                                 )
                               : Image.network(
-                                  _photoAlbum.coverUrl,
+                                  _photoAlbumListItem.coverUrl,
                                   headers: {
                                     'Authorization': 'Bearer ' +
                                         (_appData.get('userToken') as UserToken)
@@ -239,7 +242,7 @@ class _PhotoAlbumCollectionWidgetState
                           ),
                           Expanded(
                             child: Text(
-                              _photoAlbum.title,
+                              _photoAlbumListItem.title,
                               style: GoogleFonts.robotoSlab(
                                 fontSize: 44.sp,
                                 fontWeight: FontWeight.bold,

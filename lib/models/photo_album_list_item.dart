@@ -1,9 +1,9 @@
 import 'package:json_annotation/json_annotation.dart';
 
-part 'photo_album.g.dart';
+part 'photo_album_list_item.g.dart';
 
 @JsonSerializable()
-class PhotoAlbum {
+class PhotoAlbumListItem {
   @JsonKey(name: 'id')
   int id;
 
@@ -25,7 +25,7 @@ class PhotoAlbum {
   @JsonKey(name: 'action_type_name')
   String actionTypeName;
 
-  PhotoAlbum({
+  PhotoAlbumListItem({
     this.id,
     this.title,
     this.slug,
@@ -35,8 +35,8 @@ class PhotoAlbum {
     this.actionTypeName,
   });
 
-  factory PhotoAlbum.fromJson(Map<String, dynamic> json) =>
-      _$PhotoAlbumFromJson(json);
+  factory PhotoAlbumListItem.fromJson(Map<String, dynamic> json) =>
+      _$PhotoAlbumListItemFromJson(json);
 
-  Map<String, dynamic> toJson() => _$PhotoAlbumToJson(this);
+  Map<String, dynamic> toJson() => _$PhotoAlbumListItemToJson(this);
 }
