@@ -174,7 +174,7 @@ class _AudioAlbumCollectionWidgetState
                 physics: NeverScrollableScrollPhysics(),
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 2,
-                  childAspectRatio: 0.8,
+                  childAspectRatio: 0.66,
                 ),
                 itemCount: _audioAlbumListItems == null ||
                         _audioAlbumListItems.length == 0
@@ -209,6 +209,10 @@ class _AudioAlbumCollectionWidgetState
                           : EdgeInsets.fromLTRB(25.sp, 5.sp, 50.sp, 45.sp),
                       decoration: BoxDecoration(
                         color: Colors.white,
+                        border: Border.all(
+                          color: Colors.amber,
+                          width: 1.sp,
+                        ),
                         borderRadius: BorderRadius.circular(25.sp),
                         boxShadow: [
                           BoxShadow(
@@ -224,7 +228,8 @@ class _AudioAlbumCollectionWidgetState
                               ? Image.asset(
                                   'assets/default_menu_item_icon.png',
                                   width: 400.sp,
-                                  height: 400.sp,
+                                  height: 550.sp,
+                                  fit: BoxFit.cover,
                                 )
                               : Image.network(
                                   _audioAlbumListItem.coverUrl,
@@ -234,8 +239,8 @@ class _AudioAlbumCollectionWidgetState
                                             .accessToken,
                                   },
                                   width: 400.sp,
-                                  height: 400.sp,
-                                  fit: BoxFit.contain,
+                                  height: 550.sp,
+                                  fit: BoxFit.cover,
                                 ),
                           SizedBox(
                             height: 25.sp,
