@@ -174,7 +174,7 @@ class _PhotoAlbumCollectionWidgetState
                 physics: NeverScrollableScrollPhysics(),
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 2,
-                  childAspectRatio: 0.75,
+                  childAspectRatio: 0.8,
                 ),
                 itemCount: _photoAlbumListItems == null ||
                         _photoAlbumListItems.length == 0
@@ -203,7 +203,7 @@ class _PhotoAlbumCollectionWidgetState
                       );
                     },
                     child: Container(
-                      padding: EdgeInsets.fromLTRB(40.sp, 50.sp, 40.sp, 50.sp),
+                      padding: EdgeInsets.fromLTRB(40.sp, 40.sp, 40.sp, 25.sp),
                       margin: index % 2 == 0
                           ? EdgeInsets.fromLTRB(50.sp, 5.sp, 25.sp, 45.sp)
                           : EdgeInsets.fromLTRB(25.sp, 5.sp, 50.sp, 45.sp),
@@ -238,7 +238,7 @@ class _PhotoAlbumCollectionWidgetState
                                   fit: BoxFit.contain,
                                 ),
                           SizedBox(
-                            height: 40.sp,
+                            height: 25.sp,
                           ),
                           Expanded(
                             child: Center(
