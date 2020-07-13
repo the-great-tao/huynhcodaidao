@@ -273,7 +273,7 @@ class _MenuWidgetState extends State<MenuWidget> {
                                   ),
                                 )
                               : Image.network(
-                                  _menuItem.primaryIconUrl,
+                                  _menuItem.secondaryIconUrl,
                                   headers: {
                                     'Authorization': 'Bearer ' +
                                         (_appData.get('userToken') as UserToken)
