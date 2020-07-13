@@ -241,15 +241,17 @@ class _PhotoAlbumCollectionWidgetState
                             height: 40.sp,
                           ),
                           Expanded(
-                            child: Text(
-                              _photoAlbumListItem.title,
-                              style: GoogleFonts.robotoSlab(
-                                fontSize: 44.sp,
-                                fontWeight: FontWeight.bold,
+                            child: Center(
+                              child: Text(
+                                _photoAlbumListItem.title,
+                                style: GoogleFonts.robotoSlab(
+                                  fontSize: 42.sp,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                                textAlign: TextAlign.center,
+                                overflow: TextOverflow.ellipsis,
+                                maxLines: 2,
                               ),
-                              textAlign: TextAlign.center,
-                              overflow: TextOverflow.ellipsis,
-                              maxLines: 2,
                             ),
                           ),
                         ],
