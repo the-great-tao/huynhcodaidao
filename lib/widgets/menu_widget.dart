@@ -14,6 +14,7 @@ import 'package:huynhcodaidao/models/menu.dart';
 import 'package:huynhcodaidao/models/banner.dart' as BannerModel;
 
 import 'package:huynhcodaidao/widgets/banner_widget.dart';
+import 'package:huynhcodaidao/widgets/loading_widget.dart';
 import 'package:huynhcodaidao/widgets/label_widget.dart';
 
 import 'package:huynhcodaidao/repositories/menu_repository.dart';
@@ -104,22 +105,10 @@ class _MenuWidgetState extends State<MenuWidget> {
 
         return FRefresh(
           controller: _fRefreshController,
-          header: Container(
-            width: 1080.w,
-            height: 50.sp,
-            child: LinearProgressIndicator(
-              backgroundColor: Colors.amberAccent,
-              valueColor: AlwaysStoppedAnimation<Color>(Colors.amber),
-            ),
-          ),
-          headerHeight: 50.sp,
-          footer: _shouldLoad
-              ? LinearProgressIndicator(
-                  backgroundColor: Colors.amberAccent,
-                  valueColor: AlwaysStoppedAnimation<Color>(Colors.amber),
-                )
-              : null,
-          footerHeight: 50.sp,
+          header: LoadingWidget(),
+          headerHeight: 80.sp,
+          footer: _shouldLoad ? LoadingWidget() : null,
+          footerHeight: 80.sp,
           onRefresh: () {
             _menuFuture = _menuRepository.get(
               path: widget.actionUrl,
