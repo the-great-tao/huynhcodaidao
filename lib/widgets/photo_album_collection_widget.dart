@@ -123,9 +123,7 @@ class _PhotoAlbumCollectionWidgetState
           footerHeight: _shouldLoad ? 240.sp : 0,
           footerTrigger: 80.sp,
           footerBuilder: (StateSetter setter) {
-            return _shouldLoad &&
-                    _state is LoadState &&
-                    _state != LoadState.IDLE
+            return _shouldLoad && _state is LoadState
                 ? LoadingWidget(height: 80.sp)
                 : Container();
           },
