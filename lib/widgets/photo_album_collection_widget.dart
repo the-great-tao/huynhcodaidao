@@ -198,9 +198,9 @@ class _PhotoAlbumCollectionWidgetState
                         boxShadow: [
                           BoxShadow(
                             color: Colors.black12,
-                            blurRadius: 5.sp,
-                            spreadRadius: 1.sp,
-                            offset: Offset(0.sp, 5.sp),
+                            blurRadius: 4.sp,
+                            spreadRadius: 2.sp,
+                            offset: Offset(0.sp, 4.sp),
                           ),
                         ],
                       ),
