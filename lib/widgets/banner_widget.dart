@@ -84,8 +84,8 @@ class _BannerWidgetState extends State<BannerWidget> {
           highlightColor: Colors.white,
           child: Container(
             color: Colors.white12,
-            width: 1080.w,
-            height: 540.w,
+            width: width,
+            height: height,
             margin: margin,
           ),
         );
