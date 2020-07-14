@@ -13,6 +13,7 @@ import 'package:huynhcodaidao/models/menu_item_list.dart';
 import 'package:huynhcodaidao/models/menu.dart';
 import 'package:huynhcodaidao/models/banner.dart' as BannerModel;
 
+import 'package:huynhcodaidao/widgets/banner_widget.dart';
 import 'package:huynhcodaidao/widgets/label_widget.dart';
 
 import 'package:huynhcodaidao/repositories/menu_repository.dart';
@@ -139,30 +140,10 @@ class _MenuWidgetState extends State<MenuWidget> {
           shouldLoad: _shouldLoad,
           child: Column(
             children: <Widget>[
-              GestureDetector(
-                onTap: () {
-                  print(_banner != null ? _banner.actionUrl : null);
-                  RouterService.navigateTo(
-                    context: context,
-                    actionUrl: _banner.actionUrl,
-                    actionTypeName: _banner.actionTypeName,
-                    actionTitle: _banner.actionTitle,
-                  );
-                },
-                child: Container(
-                  width: 1080.sp,
-                  padding: EdgeInsets.only(bottom: 16.sp),
-                  child: _banner == null
-                      ? Container()
-                      : Image.network(
-                          _banner.url,
-                          headers: {
-                            'Authorization': 'Bearer ' +
-                                (_appData.get('userToken') as UserToken)
-                                    .accessToken,
-                          },
-                          fit: BoxFit.fitWidth,
-                        ),
+              BannerWidget(
+                banner: _banner,
+                margin: EdgeInsets.only(
+                  bottom: 16.sp,
                 ),
               ),
               ListView.builder(
@@ -183,7 +164,6 @@ class _MenuWidgetState extends State<MenuWidget> {
 
                   return GestureDetector(
                     onTap: () {
-                      print(_menuItem.actionUrl);
                       RouterService.navigateTo(
                         context: context,
                         actionUrl: _menuItem.actionUrl,
@@ -201,7 +181,7 @@ class _MenuWidgetState extends State<MenuWidget> {
                           BoxShadow(
                             color: Colors.black12,
                             blurRadius: 4.sp,
-                            spreadRadius: 4.sp,
+                            spreadRadius: 2.sp,
                           ),
                         ],
                       ),
