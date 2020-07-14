@@ -16,6 +16,12 @@ class Banner {
   @JsonKey(name: 'url')
   String url;
 
+  @JsonKey(name: 'width')
+  double width;
+
+  @JsonKey(name: 'height')
+  double height;
+
   @JsonKey(name: 'action_title')
   String actionTitle;
 
@@ -30,6 +36,8 @@ class Banner {
     this.title,
     this.slug,
     this.url,
+    this.width,
+    this.height,
     this.actionTitle,
     this.actionUrl,
     this.actionTypeName,
