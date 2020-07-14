@@ -88,6 +88,9 @@ class _AudioAlbumCollectionWidgetState
 
             _page = 1;
             _shouldLoad = _audioAlbumList.nextPageUrl != null;
+            if (_state is RefreshState) {
+              _fRefreshController.finishRefresh();
+            }
           }
 
           if (_state is LoadState) {
@@ -104,21 +107,33 @@ class _AudioAlbumCollectionWidgetState
 
             _page++;
             _shouldLoad = _nextAudioAlbumList.nextPageUrl != null;
+            _fRefreshController.finishLoad();
           }
         }
 
         return FRefresh(
           controller: _fRefreshController,
-          header: LoadingWidget(height: 80.sp),
           headerHeight: 80.sp,
-          footer: _shouldLoad ? LoadingWidget(height: 80.sp) : null,
-          footerHeight: 80.sp,
+          headerTrigger: 240.sp,
+          headerBuilder: (StateSetter setter, BoxConstraints constraints) {
+            return _state is RefreshState && _state != RefreshState.IDLE
+                ? LoadingWidget(height: 80.sp)
+                : Container();
+          },
+          footerHeight: _shouldLoad ? 240.sp : 0,
+          footerTrigger: 80.sp,
+          footerBuilder: (StateSetter setter) {
+            return _shouldLoad &&
+                    _state is LoadState &&
+                    _state != LoadState.IDLE
+                ? LoadingWidget(height: 80.sp)
+                : Container();
+          },
           onRefresh: () {
             _audioAlbumCollectionFuture = _audioAlbumCollectionRepository.get(
               path: widget.actionUrl,
               fullUrl: widget.fullUrl,
             );
-            _fRefreshController.finishRefresh();
             setState(() {});
           },
           onLoad: () {
@@ -127,7 +142,6 @@ class _AudioAlbumCollectionWidgetState
               page: _page + 1,
               fullUrl: widget.fullUrl,
             );
-            _fRefreshController.finishLoad();
             setState(() {});
           },
           shouldLoad: _shouldLoad,
