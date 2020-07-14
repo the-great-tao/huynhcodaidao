@@ -61,6 +61,13 @@ class _MenuWidgetState extends State<MenuWidget> {
   }
 
   @override
+  void dispose() {
+    _fRefreshController.dispose();
+
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return FutureBuilder(
       future: _menuFuture,

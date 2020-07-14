@@ -62,6 +62,13 @@ class _PhotoAlbumCollectionWidgetState
   }
 
   @override
+  void dispose() {
+    _fRefreshController.dispose();
+
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return FutureBuilder(
       future: _photoAlbumCollectionFuture,
