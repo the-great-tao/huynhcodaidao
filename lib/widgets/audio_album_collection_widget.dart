@@ -13,6 +13,8 @@ import 'package:huynhcodaidao/models/audio_album_list.dart';
 import 'package:huynhcodaidao/models/audio_album_collection.dart';
 import 'package:huynhcodaidao/models/banner.dart' as BannerModel;
 
+import 'package:huynhcodaidao/widgets/banner_widget.dart';
+
 import 'package:huynhcodaidao/repositories/audio_album_collection_repository.dart';
 
 import 'package:huynhcodaidao/services/router_service.dart';
@@ -142,30 +144,10 @@ class _AudioAlbumCollectionWidgetState
           shouldLoad: _shouldLoad,
           child: Column(
             children: <Widget>[
-              GestureDetector(
-                onTap: () {
-                  print(_banner != null ? _banner.actionUrl : null);
-                  RouterService.navigateTo(
-                    context: context,
-                    actionUrl: _banner.actionUrl,
-                    actionTypeName: _banner.actionTypeName,
-                    actionTitle: _banner.actionTitle,
-                  );
-                },
-                child: Container(
-                  width: 1080.sp,
-                  padding: EdgeInsets.only(bottom: 50.sp),
-                  child: _banner == null
-                      ? Container()
-                      : Image.network(
-                          _banner.url,
-                          headers: {
-                            'Authorization': 'Bearer ' +
-                                (_appData.get('userToken') as UserToken)
-                                    .accessToken,
-                          },
-                          fit: BoxFit.fitWidth,
-                        ),
+              BannerWidget(
+                banner: _banner,
+                margin: EdgeInsets.only(
+                  bottom: 50.sp,
                 ),
               ),
               GridView.builder(
@@ -194,7 +176,6 @@ class _AudioAlbumCollectionWidgetState
 
                   return GestureDetector(
                     onTap: () {
-                      print(_audioAlbumListItem.actionUrl);
                       RouterService.navigateTo(
                         context: context,
                         actionUrl: _audioAlbumListItem.actionUrl,
