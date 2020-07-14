@@ -119,7 +119,9 @@ class _MenuWidgetState extends State<MenuWidget> {
           footerHeight: _shouldLoad ? 240.sp : 0,
           footerTrigger: 80.sp,
           footerBuilder: (StateSetter setter) {
-            return _shouldLoad && _state is LoadState
+            return _shouldLoad &&
+                    _state is LoadState &&
+                    _state != LoadState.IDLE
                 ? LoadingWidget(height: 80.sp)
                 : Container();
           },
