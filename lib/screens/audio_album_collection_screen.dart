@@ -40,7 +40,6 @@ class AudioAlbumCollectionScreen extends StatelessWidget {
           body: Container(
             child: AudioAlbumCollectionWidget(
               actionUrl: actionUrl,
-              fullUrl: true,
             ),
           ),
         ),

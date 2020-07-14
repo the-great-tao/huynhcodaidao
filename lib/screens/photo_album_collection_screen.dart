@@ -40,7 +40,6 @@ class PhotoAlbumCollectionScreen extends StatelessWidget {
           body: Container(
             child: PhotoAlbumCollectionWidget(
               actionUrl: actionUrl,
-              fullUrl: true,
             ),
           ),
         ),

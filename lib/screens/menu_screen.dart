@@ -40,7 +40,6 @@ class MenuScreen extends StatelessWidget {
           body: Container(
             child: MenuWidget(
               actionUrl: actionUrl,
-              fullUrl: true,
             ),
           ),
         ),

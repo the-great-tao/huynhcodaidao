@@ -1,4 +1,3 @@
-import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
 import 'package:meta/meta.dart';
 import 'package:hive/hive.dart';
@@ -18,19 +17,10 @@ class PhotoAlbumCollectionRepository {
   Future<PhotoAlbumCollection> get({
     @required String path,
     int page = 1,
-    bool fullUrl = false,
   }) async {
-    PhotoAlbumCollectionService photoAlbumCollectionService =
-        _photoAlbumCollectionService;
     UserToken userToken = _appData.get('userToken');
 
-    if (fullUrl) {
-      photoAlbumCollectionService =
-          PhotoAlbumCollectionService(Dio(), baseUrl: path);
-      path = '/';
-    }
-
-    return photoAlbumCollectionService.get(
+    return _photoAlbumCollectionService.get(
       path: path,
       token: 'Bearer ' + userToken.accessToken,
       page: page,

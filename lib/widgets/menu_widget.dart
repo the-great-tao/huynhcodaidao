@@ -25,12 +25,10 @@ final GetIt getIt = GetIt.instance;
 
 class MenuWidget extends StatefulWidget {
   final String actionUrl;
-  final bool fullUrl;
 
   const MenuWidget({
     Key key,
     this.actionUrl = '/app/menu/danh-muc-chinh',
-    this.fullUrl = false,
   }) : super(key: key);
 
   @override
@@ -57,7 +55,6 @@ class _MenuWidgetState extends State<MenuWidget> {
 
     _menuFuture = _menuRepository.get(
       path: widget.actionUrl,
-      fullUrl: widget.fullUrl,
     );
 
     super.initState();
@@ -128,7 +125,6 @@ class _MenuWidgetState extends State<MenuWidget> {
           onRefresh: () {
             _menuFuture = _menuRepository.get(
               path: widget.actionUrl,
-              fullUrl: widget.fullUrl,
             );
             setState(() {});
           },
@@ -136,7 +132,6 @@ class _MenuWidgetState extends State<MenuWidget> {
             _menuFuture = _menuRepository.get(
               path: widget.actionUrl,
               page: _page + 1,
-              fullUrl: widget.fullUrl,
             );
             setState(() {});
           },

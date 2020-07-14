@@ -1,4 +1,3 @@
-import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
 import 'package:meta/meta.dart';
 import 'package:hive/hive.dart';
@@ -18,19 +17,10 @@ class AudioAlbumCollectionRepository {
   Future<AudioAlbumCollection> get({
     @required String path,
     int page = 1,
-    bool fullUrl = false,
   }) async {
-    AudioAlbumCollectionService audioAlbumCollectionService =
-        _audioAlbumCollectionService;
     UserToken userToken = _appData.get('userToken');
 
-    if (fullUrl) {
-      audioAlbumCollectionService =
-          AudioAlbumCollectionService(Dio(), baseUrl: path);
-      path = '/';
-    }
-
-    return audioAlbumCollectionService.get(
+    return _audioAlbumCollectionService.get(
       path: path,
       token: 'Bearer ' + userToken.accessToken,
       page: page,

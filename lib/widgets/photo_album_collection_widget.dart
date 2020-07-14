@@ -24,12 +24,10 @@ final GetIt getIt = GetIt.instance;
 
 class PhotoAlbumCollectionWidget extends StatefulWidget {
   final String actionUrl;
-  final bool fullUrl;
 
   const PhotoAlbumCollectionWidget({
     Key key,
     this.actionUrl,
-    this.fullUrl = true,
   }) : super(key: key);
 
   @override
@@ -58,7 +56,6 @@ class _PhotoAlbumCollectionWidgetState
 
     _photoAlbumCollectionFuture = _photoAlbumCollectionRepository.get(
       path: widget.actionUrl,
-      fullUrl: widget.fullUrl,
     );
 
     super.initState();
@@ -132,7 +129,6 @@ class _PhotoAlbumCollectionWidgetState
           onRefresh: () {
             _photoAlbumCollectionFuture = _photoAlbumCollectionRepository.get(
               path: widget.actionUrl,
-              fullUrl: widget.fullUrl,
             );
             setState(() {});
           },
@@ -140,7 +136,6 @@ class _PhotoAlbumCollectionWidgetState
             _photoAlbumCollectionFuture = _photoAlbumCollectionRepository.get(
               path: widget.actionUrl,
               page: _page + 1,
-              fullUrl: widget.fullUrl,
             );
             setState(() {});
           },
