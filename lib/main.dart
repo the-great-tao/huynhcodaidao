@@ -26,10 +26,12 @@ import 'package:huynhcodaidao/blocs/login_screen_bloc.dart';
 import 'package:huynhcodaidao/repositories/user_repository.dart';
 import 'package:huynhcodaidao/repositories/menu_repository.dart';
 import 'package:huynhcodaidao/repositories/photo_album_collection_repository.dart';
+import 'package:huynhcodaidao/repositories/audio_album_collection_repository.dart';
 
 import 'package:huynhcodaidao/services/user_service.dart';
 import 'package:huynhcodaidao/services/menu_service.dart';
 import 'package:huynhcodaidao/services/photo_album_collection_service.dart';
+import 'package:huynhcodaidao/services/audio_album_collection_service.dart';
 
 import 'package:huynhcodaidao/screens/splash_screen.dart';
 import 'package:huynhcodaidao/screens/login_screen.dart';
@@ -37,6 +39,7 @@ import 'package:huynhcodaidao/screens/home_screen.dart';
 import 'package:huynhcodaidao/screens/menu_screen.dart';
 import 'package:huynhcodaidao/screens/webview_screen.dart';
 import 'package:huynhcodaidao/screens/photo_album_collection_screen.dart';
+import 'package:huynhcodaidao/screens/audio_album_collection_screen.dart';
 
 final GetIt getIt = GetIt.instance;
 
@@ -54,6 +57,9 @@ Future setupGetIt() async {
   getIt.registerLazySingleton<PhotoAlbumCollectionService>(
     () => PhotoAlbumCollectionService(Dio()),
   );
+  getIt.registerLazySingleton<AudioAlbumCollectionService>(
+    () => AudioAlbumCollectionService(Dio()),
+  );
 
   getIt.registerLazySingleton<UserRepository>(
     () => UserRepository(),
@@ -63,6 +69,9 @@ Future setupGetIt() async {
   );
   getIt.registerLazySingleton<PhotoAlbumCollectionRepository>(
     () => PhotoAlbumCollectionRepository(),
+  );
+  getIt.registerLazySingleton<AudioAlbumCollectionRepository>(
+    () => AudioAlbumCollectionRepository(),
   );
 
   getIt.registerLazySingleton<Router>(
@@ -172,7 +181,7 @@ Future setupRouter() async {
       actionUrl = utf8.decode(base64Url.decode(actionUrl));
       actionTitle = utf8.decode(base64Url.decode(actionTitle));
 
-      return PhotoAlbumCollectionScreen(
+      return AudioAlbumCollectionScreen(
         actionUrl: actionUrl,
         actionTitle: actionTitle,
       );
