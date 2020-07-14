@@ -105,9 +105,9 @@ class _MenuWidgetState extends State<MenuWidget> {
 
         return FRefresh(
           controller: _fRefreshController,
-          header: LoadingWidget(),
+          header: LoadingWidget(height: 80.sp),
           headerHeight: 80.sp,
-          footer: _shouldLoad ? LoadingWidget() : null,
+          footer: _shouldLoad ? LoadingWidget(height: 80.sp) : null,
           footerHeight: 80.sp,
           onRefresh: () {
             _menuFuture = _menuRepository.get(
