@@ -30,6 +30,7 @@ class AppBar01Widget extends StatelessWidget implements PreferredSizeWidget {
             ),
             Text(
               'HUỲNH CƠ ĐẠI ĐẠO TAM KỲ',
+              maxLines: 2,
               overflow: TextOverflow.ellipsis,
               style: GoogleFonts.robotoSlab(
                 color: Colors.white,
