@@ -29,7 +29,6 @@ class NetworkImageWidget extends StatelessWidget {
       fit: fit,
       fadeOutDuration: Duration(milliseconds: 500),
       placeholder: (BuildContext context, String url) {
-        print(url);
         return Container(
           width: width,
           height: height,
