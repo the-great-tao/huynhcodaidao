@@ -2,11 +2,12 @@ import 'package:get_it/get_it.dart';
 import 'package:hive/hive.dart';
 
 import 'package:flutter/material.dart';
-import 'package:photo_view/photo_view_gallery.dart';
 import 'package:responsive_widgets/responsive_widgets.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:frefresh/frefresh.dart';
 import 'package:photo_view/photo_view.dart';
+import 'package:photo_view/photo_view_gallery.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 
 import 'package:huynhcodaidao/models/user_token.dart';
@@ -65,6 +66,7 @@ class _PhotoAlbumWidgetState extends State<PhotoAlbumWidget> {
 
   void onPhotoPageChanged(int index) {
     _photoIndex = index;
+    setState(() {});
 
     if (_state is LoadState && _state == LoadState.LOADING) {
       return;
@@ -72,6 +74,8 @@ class _PhotoAlbumWidgetState extends State<PhotoAlbumWidget> {
     if (!_shouldLoad || _photoAlbumItems.length - _photoIndex >= 3) {
       return;
     }
+
+    print('Loading more photos...');
 
     _state = LoadState.LOADING;
     _photoAlbumFuture = _photoAlbumRepository.get(
@@ -160,7 +164,8 @@ class _PhotoAlbumWidgetState extends State<PhotoAlbumWidget> {
                             width: 120.sp,
                             height: 120.sp,
                             child: CircularProgressIndicator(
-                              valueColor: AlwaysStoppedAnimation<Color>(Colors.amber),
+                              valueColor:
+                                  AlwaysStoppedAnimation<Color>(Colors.amber),
                               value: event == null
                                   ? 0
                                   : event.cumulativeBytesLoaded /
@@ -214,7 +219,18 @@ class _PhotoAlbumWidgetState extends State<PhotoAlbumWidget> {
                         size: 100.sp,
                       ),
                     ),
-                    Spacer(),
+                    Expanded(
+                      child: Center(
+                        child: Text(
+                          '${_photoIndex + 1} / ${_photoAlbumPage.total}',
+                          style: GoogleFonts.robotoSlab(
+                            color: Colors.white,
+                            fontSize: 50.sp,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                    ),
                     GestureDetector(
                       onTap: () {
                         if (_photoIndex >= _photoAlbumItems.length - 1) {
