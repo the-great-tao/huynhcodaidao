@@ -129,29 +129,47 @@ class _PhotoAlbumWidgetState extends State<PhotoAlbumWidget> {
             Expanded(
               child: ClipRect(
                 child: PhotoViewGallery.builder(
-                  pageController: _photoPageController,
-                  onPageChanged: onPhotoPageChanged,
-                  itemCount:
-                      _photoAlbumItems == null || _photoAlbumItems.length == 0
-                          ? 0
-                          : _photoAlbumPage.to - _photoAlbumPage.from + 1,
-                  builder: (BuildContext context, int index) {
-                    PhotoAlbumItem _photoAlbumItem = _photoAlbumItems[index];
+                    pageController: _photoPageController,
+                    onPageChanged: onPhotoPageChanged,
+                    itemCount:
+                        _photoAlbumItems == null || _photoAlbumItems.length == 0
+                            ? 0
+                            : _photoAlbumPage.to - _photoAlbumPage.from + 1,
+                    builder: (BuildContext context, int index) {
+                      PhotoAlbumItem _photoAlbumItem = _photoAlbumItems[index];
 
-                    return PhotoViewGalleryPageOptions(
-                      minScale: PhotoViewComputedScale.contained,
-                      maxScale: PhotoViewComputedScale.contained * 5,
-                      imageProvider: CachedNetworkImageProvider(
-                        _photoAlbumItem.photoUrl,
-                        headers: {
-                          'Authorization': 'Bearer ' +
-                              (_appData.get('userToken') as UserToken)
-                                  .accessToken,
-                        },
-                      ),
-                    );
-                  },
-                ),
+                      return PhotoViewGalleryPageOptions(
+                        minScale: PhotoViewComputedScale.contained,
+                        maxScale: PhotoViewComputedScale.contained * 5,
+                        imageProvider: CachedNetworkImageProvider(
+                          _photoAlbumItem.photoUrl,
+                          headers: {
+                            'Authorization': 'Bearer ' +
+                                (_appData.get('userToken') as UserToken)
+                                    .accessToken,
+                          },
+                        ),
+                      );
+                    },
+                    loadingBuilder:
+                        (BuildContext context, ImageChunkEvent event) {
+                      return Container(
+                        color: Colors.black,
+                        child: Center(
+                          child: SizedBox(
+                            width: 120.sp,
+                            height: 120.sp,
+                            child: CircularProgressIndicator(
+                              valueColor: AlwaysStoppedAnimation<Color>(Colors.amber),
+                              value: event == null
+                                  ? 0
+                                  : event.cumulativeBytesLoaded /
+                                      event.expectedTotalBytes,
+                            ),
+                          ),
+                        ),
+                      );
+                    }),
               ),
             ),
             Container(
