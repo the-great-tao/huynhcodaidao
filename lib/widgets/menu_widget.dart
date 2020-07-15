@@ -13,6 +13,7 @@ import 'package:huynhcodaidao/models/menu_item_list.dart';
 import 'package:huynhcodaidao/models/menu.dart';
 import 'package:huynhcodaidao/models/banner.dart' as BannerModel;
 
+import 'package:huynhcodaidao/widgets/network_image_widget.dart';
 import 'package:huynhcodaidao/widgets/banner_widget.dart';
 import 'package:huynhcodaidao/widgets/loading_widget.dart';
 import 'package:huynhcodaidao/widgets/label_widget.dart';
@@ -198,8 +199,8 @@ class _MenuWidgetState extends State<MenuWidget> {
                                   width: 120.sp,
                                   height: 120.sp,
                                 )
-                              : Image.network(
-                                  _menuItem.primaryIconUrl,
+                              : NetworkImageWidget(
+                                  source: _menuItem.primaryIconUrl,
                                   headers: {
                                     'Authorization': 'Bearer ' +
                                         (_appData.get('userToken') as UserToken)
@@ -257,8 +258,8 @@ class _MenuWidgetState extends State<MenuWidget> {
                                     ),
                                   ),
                                 )
-                              : Image.network(
-                                  _menuItem.secondaryIconUrl,
+                              : NetworkImageWidget(
+                                  source: _menuItem.secondaryIconUrl,
                                   headers: {
                                     'Authorization': 'Bearer ' +
                                         (_appData.get('userToken') as UserToken)

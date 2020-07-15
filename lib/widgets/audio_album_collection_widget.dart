@@ -13,6 +13,7 @@ import 'package:huynhcodaidao/models/audio_album_list.dart';
 import 'package:huynhcodaidao/models/audio_album_collection.dart';
 import 'package:huynhcodaidao/models/banner.dart' as BannerModel;
 
+import 'package:huynhcodaidao/widgets/network_image_widget.dart';
 import 'package:huynhcodaidao/widgets/banner_widget.dart';
 import 'package:huynhcodaidao/widgets/loading_widget.dart';
 
@@ -218,8 +219,8 @@ class _AudioAlbumCollectionWidgetState
                                   height: 550.sp,
                                   fit: BoxFit.cover,
                                 )
-                              : Image.network(
-                                  _audioAlbumListItem.coverUrl,
+                              : NetworkImageWidget(
+                                  source: _audioAlbumListItem.coverUrl,
                                   headers: {
                                     'Authorization': 'Bearer ' +
                                         (_appData.get('userToken') as UserToken)
