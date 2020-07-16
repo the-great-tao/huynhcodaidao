@@ -38,15 +38,18 @@ class _PhotoAlbumWidgetState extends State<PhotoAlbumWidget> {
   final PhotoAlbumRepository _photoAlbumRepository =
       getIt.get<PhotoAlbumRepository>();
   final PageController _photoPageController = PageController();
+  final PhotoViewController _photoViewController = PhotoViewController();
 
-  dynamic _state;
   Future<PhotoAlbum> _photoAlbumFuture;
   PhotoAlbum _photoAlbum;
   PhotoAlbumPage _photoAlbumPage;
   List<PhotoAlbumItem> _photoAlbumItems;
+
   int _page = 1;
   int _photoIndex = 0;
+
   bool _shouldLoad = false;
+  dynamic _loadState;
 
   @override
   void initState() {
@@ -60,15 +63,17 @@ class _PhotoAlbumWidgetState extends State<PhotoAlbumWidget> {
   @override
   void dispose() {
     _photoPageController.dispose();
+    _photoViewController.dispose();
 
     super.dispose();
   }
 
   void onPhotoPageChanged(int index) {
-    _photoIndex = index;
-    setState(() {});
+    setState(() {
+      _photoIndex = index;
+    });
 
-    if (_state is LoadState && _state == LoadState.LOADING) {
+    if (_loadState is LoadState && _loadState == LoadState.LOADING) {
       return;
     }
     if (!_shouldLoad || _photoAlbumItems.length - _photoIndex >= 3) {
@@ -77,13 +82,13 @@ class _PhotoAlbumWidgetState extends State<PhotoAlbumWidget> {
 
     print('Loading more photos...');
 
-    _state = LoadState.LOADING;
-    _photoAlbumFuture = _photoAlbumRepository.get(
-      path: widget.actionUrl,
-      page: _page + 1,
-    );
-
-    setState(() {});
+    setState(() {
+      _loadState = LoadState.LOADING;
+      _photoAlbumFuture = _photoAlbumRepository.get(
+        path: widget.actionUrl,
+        page: _page + 1,
+      );
+    });
   }
 
   @override
@@ -101,7 +106,7 @@ class _PhotoAlbumWidgetState extends State<PhotoAlbumWidget> {
         }
 
         if (snapshot.connectionState == ConnectionState.done) {
-          if (_state == null) {
+          if (_loadState == null) {
             _photoAlbum = snapshot.data;
             _photoAlbumPage = _photoAlbum.photoAlbumPage;
             _photoAlbumItems = _photoAlbumPage.data;
@@ -110,7 +115,7 @@ class _PhotoAlbumWidgetState extends State<PhotoAlbumWidget> {
             _shouldLoad = _photoAlbumPage.nextPageUrl != null;
           }
 
-          if (_state is LoadState && _state == LoadState.LOADING) {
+          if (_loadState is LoadState && _loadState == LoadState.LOADING) {
             PhotoAlbum _nextPhotoAlbum = snapshot.data;
             PhotoAlbumPage _nextPhotoAlbumPage = _nextPhotoAlbum.photoAlbumPage;
             List<PhotoAlbumItem> _nextPhotoAlbumItems =
@@ -125,7 +130,8 @@ class _PhotoAlbumWidgetState extends State<PhotoAlbumWidget> {
             _shouldLoad = _nextPhotoAlbumPage.nextPageUrl != null;
           }
 
-          _state = LoadState.IDLE;
+          _photoAlbumFuture = null;
+          _loadState = LoadState.IDLE;
         }
 
         return Column(
@@ -143,6 +149,10 @@ class _PhotoAlbumWidgetState extends State<PhotoAlbumWidget> {
                       PhotoAlbumItem _photoAlbumItem = _photoAlbumItems[index];
 
                       return PhotoViewGalleryPageOptions(
+                        controller: _photoViewController,
+                        heroAttributes: PhotoViewHeroAttributes(
+                          tag: _photoAlbumItem.id,
+                        ),
                         minScale: PhotoViewComputedScale.contained,
                         maxScale: PhotoViewComputedScale.contained * 5,
                         imageProvider: CachedNetworkImageProvider(
@@ -181,78 +191,122 @@ class _PhotoAlbumWidgetState extends State<PhotoAlbumWidget> {
               width: 1080.w,
               height: 200.sp,
               color: Colors.black,
-              child: Container(
-                margin: EdgeInsets.fromLTRB(240.sp, 40.sp, 240.sp, 40.sp),
-                decoration: BoxDecoration(
-                  gradient: LinearGradients.main,
-                  borderRadius: BorderRadius.all(
-                    Radius.circular(9999.sp),
-                  ),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black12,
-                      blurRadius: 4.sp,
-                      spreadRadius: 2.sp,
-                      offset: Offset(0.sp, 2.sp),
-                    ),
-                  ],
-                ),
-                child: Row(
-                  children: <Widget>[
-                    SizedBox(
-                      width: 20.sp,
-                    ),
-                    GestureDetector(
-                      onTap: () {
-                        if (_photoIndex <= 0) {
-                          return;
-                        }
-
-                        _photoPageController.previousPage(
-                          duration: Duration(milliseconds: 500),
-                          curve: Curves.decelerate,
-                        );
-                      },
-                      child: Icon(
-                        Icons.arrow_back,
-                        color: Colors.white,
-                        size: 100.sp,
-                      ),
-                    ),
-                    Expanded(
-                      child: Center(
-                        child: Text(
-                          '${_photoIndex + 1} / ${_photoAlbumPage.total}',
-                          style: GoogleFonts.robotoSlab(
-                            color: Colors.white,
-                            fontSize: 50.sp,
-                            fontWeight: FontWeight.bold,
-                          ),
+              child: Row(
+                children: <Widget>[
+                  Expanded(
+                    flex: 3,
+                    child: Container(
+                      height: double.infinity,
+                      margin: EdgeInsets.fromLTRB(80.sp, 40.sp, 40.sp, 40.sp),
+                      decoration: BoxDecoration(
+                        gradient: LinearGradients.main,
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(9999.sp),
                         ),
                       ),
-                    ),
-                    GestureDetector(
-                      onTap: () {
-                        if (_photoIndex >= _photoAlbumItems.length - 1) {
-                          return;
-                        }
-
-                        _photoPageController.nextPage(
-                          duration: Duration(milliseconds: 500),
-                          curve: Curves.decelerate,
-                        );
-                      },
-                      child: Icon(
-                        Icons.arrow_forward,
-                        color: Colors.white,
-                        size: 100.sp,
+                      child: Row(
+                        children: <Widget>[
+                          SizedBox(
+                            width: 20.sp,
+                          ),
+                          GestureDetector(
+                            onTap: () {
+                              _photoViewController.scale /= 1.1;
+                            },
+                            child: Icon(
+                              Icons.zoom_out,
+                              color: Colors.white,
+                              size: 100.sp,
+                            ),
+                          ),
+                          Spacer(),
+                          GestureDetector(
+                            onTap: () {
+                              _photoViewController.scale *= 1.1;
+                            },
+                            child: Icon(
+                              Icons.zoom_in,
+                              color: Colors.white,
+                              size: 100.sp,
+                            ),
+                          ),
+                          SizedBox(
+                            width: 20.sp,
+                          ),
+                        ],
                       ),
                     ),
-                    SizedBox(
-                      width: 20.sp,
+                  ),
+                  Expanded(
+                    flex: 5,
+                    child: Container(
+                      height: double.infinity,
+                      margin: EdgeInsets.fromLTRB(40.sp, 40.sp, 80.sp, 40.sp),
+                      decoration: BoxDecoration(
+                        gradient: LinearGradients.main,
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(9999.sp),
+                        ),
+                      ),
+                      child: Row(
+                        children: <Widget>[
+                          SizedBox(
+                            width: 20.sp,
+                          ),
+                          GestureDetector(
+                            onTap: () {
+                              if (_photoIndex <= 0) {
+                                return;
+                              }
+
+                              _photoPageController.previousPage(
+                                duration: Duration(milliseconds: 500),
+                                curve: Curves.decelerate,
+                              );
+                            },
+                            child: Icon(
+                              Icons.arrow_back,
+                              color: Colors.white,
+                              size: 100.sp,
+                            ),
+                          ),
+                          Expanded(
+                            child: Center(
+                              child: Text(
+                                '${_photoIndex + 1} / ${_photoAlbumPage.total}',
+                                style: GoogleFonts.robotoSlab(
+                                  color: Colors.white,
+                                  fontSize: 60.sp,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ),
+                          ),
+                          GestureDetector(
+                            onTap: () {
+                              if (_photoIndex >= _photoAlbumItems.length - 1) {
+                                return;
+                              }
+
+                              _photoPageController.nextPage(
+                                duration: Duration(milliseconds: 500),
+                                curve: Curves.decelerate,
+                              );
+                            },
+                            child: Icon(
+                              Icons.arrow_forward,
+                              color: Colors.white,
+                              size: 100.sp,
+                            ),
+                          ),
+                          SizedBox(
+                            width: 20.sp,
+                          ),
+                        ],
+                      ),
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
             )
           ],
