@@ -112,6 +112,8 @@ class _AudioAlbumCollectionWidgetState
             _shouldLoad = _nextAudioAlbumList.nextPageUrl != null;
             _fRefreshController.finishLoad();
           }
+
+          _audioAlbumCollectionFuture = null;
         }
 
         return FRefresh(
@@ -133,17 +135,19 @@ class _AudioAlbumCollectionWidgetState
                 : Container();
           },
           onRefresh: () {
-            _audioAlbumCollectionFuture = _audioAlbumCollectionRepository.get(
-              path: widget.actionUrl,
-            );
-            setState(() {});
+            setState(() {
+              _audioAlbumCollectionFuture = _audioAlbumCollectionRepository.get(
+                path: widget.actionUrl,
+              );
+            });
           },
           onLoad: () {
-            _audioAlbumCollectionFuture = _audioAlbumCollectionRepository.get(
-              path: widget.actionUrl,
-              page: _page + 1,
-            );
-            setState(() {});
+            setState(() {
+              _audioAlbumCollectionFuture = _audioAlbumCollectionRepository.get(
+                path: widget.actionUrl,
+                page: _page + 1,
+              );
+            });
           },
           shouldLoad: _shouldLoad,
           child: Column(

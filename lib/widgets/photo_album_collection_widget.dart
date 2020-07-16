@@ -112,6 +112,8 @@ class _PhotoAlbumCollectionWidgetState
             _shouldLoad = _nextPhotoAlbumList.nextPageUrl != null;
             _fRefreshController.finishLoad();
           }
+
+          _photoAlbumCollectionFuture = null;
         }
 
         return FRefresh(
@@ -133,17 +135,19 @@ class _PhotoAlbumCollectionWidgetState
                 : Container();
           },
           onRefresh: () {
-            _photoAlbumCollectionFuture = _photoAlbumCollectionRepository.get(
-              path: widget.actionUrl,
-            );
-            setState(() {});
+            setState(() {
+              _photoAlbumCollectionFuture = _photoAlbumCollectionRepository.get(
+                path: widget.actionUrl,
+              );
+            });
           },
           onLoad: () {
-            _photoAlbumCollectionFuture = _photoAlbumCollectionRepository.get(
-              path: widget.actionUrl,
-              page: _page + 1,
-            );
-            setState(() {});
+            setState(() {
+              _photoAlbumCollectionFuture = _photoAlbumCollectionRepository.get(
+                path: widget.actionUrl,
+                page: _page + 1,
+              );
+            });
           },
           shouldLoad: _shouldLoad,
           child: Column(

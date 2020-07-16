@@ -108,6 +108,8 @@ class _MenuWidgetState extends State<MenuWidget> {
             _shouldLoad = _nextMenuItemList.nextPageUrl != null;
             _fRefreshController.finishLoad();
           }
+
+          _menuFuture = null;
         }
 
         return FRefresh(
@@ -129,17 +131,19 @@ class _MenuWidgetState extends State<MenuWidget> {
                 : Container();
           },
           onRefresh: () {
-            _menuFuture = _menuRepository.get(
-              path: widget.actionUrl,
-            );
-            setState(() {});
+            setState(() {
+              _menuFuture = _menuRepository.get(
+                path: widget.actionUrl,
+              );
+            });
           },
           onLoad: () {
-            _menuFuture = _menuRepository.get(
-              path: widget.actionUrl,
-              page: _page + 1,
-            );
-            setState(() {});
+            setState(() {
+              _menuFuture = _menuRepository.get(
+                path: widget.actionUrl,
+                page: _page + 1,
+              );
+            });
           },
           shouldLoad: _shouldLoad,
           child: Column(
