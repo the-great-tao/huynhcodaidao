@@ -174,6 +174,7 @@ class _PhotoAlbumWidgetState extends State<PhotoAlbumWidget> {
                             width: 120.sp,
                             height: 120.sp,
                             child: CircularProgressIndicator(
+                              strokeWidth: 20.sp,
                               valueColor:
                                   AlwaysStoppedAnimation<Color>(Colors.amber),
                               value: event == null
