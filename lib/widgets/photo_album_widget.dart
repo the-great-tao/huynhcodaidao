@@ -71,6 +71,7 @@ class _PhotoAlbumWidgetState extends State<PhotoAlbumWidget> {
   void onPhotoPageChanged(int index) {
     setState(() {
       _photoIndex = index;
+      _photoViewController.reset();
     });
 
     if (_loadState is LoadState && _loadState == LoadState.LOADING) {
