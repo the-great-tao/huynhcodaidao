@@ -111,8 +111,6 @@ class _PhotoAlbumCollectionWidgetState
             _shouldLoad = _nextPhotoAlbumList.nextPageUrl != null;
             _fRefreshController.finishLoad();
           }
-
-          _photoAlbumCollectionFuture = null;
         }
 
         return FRefresh(

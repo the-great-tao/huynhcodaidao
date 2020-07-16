@@ -107,8 +107,6 @@ class _MenuWidgetState extends State<MenuWidget> {
             _shouldLoad = _nextMenuItemList.nextPageUrl != null;
             _fRefreshController.finishLoad();
           }
-
-          _menuFuture = null;
         }
 
         return FRefresh(

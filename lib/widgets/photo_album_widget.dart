@@ -131,7 +131,6 @@ class _PhotoAlbumWidgetState extends State<PhotoAlbumWidget> {
             _shouldLoad = _nextPhotoAlbumPage.nextPageUrl != null;
           }
 
-          _photoAlbumFuture = null;
           _loadState = LoadState.IDLE;
         }
 

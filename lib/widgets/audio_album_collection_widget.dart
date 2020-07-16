@@ -111,8 +111,6 @@ class _AudioAlbumCollectionWidgetState
             _shouldLoad = _nextAudioAlbumList.nextPageUrl != null;
             _fRefreshController.finishLoad();
           }
-
-          _audioAlbumCollectionFuture = null;
         }
 
         return FRefresh(

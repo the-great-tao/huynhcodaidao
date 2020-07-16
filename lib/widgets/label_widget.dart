@@ -55,8 +55,6 @@ class _LabelWidgetState extends State<LabelWidget> {
         Response response = snapshot.data;
         Label label = Label.fromJson(response.data);
 
-        _responseFuture = null;
-
         return Container(
           padding: EdgeInsets.fromLTRB(20.sp, 10.sp, 20.sp, 10.sp),
           decoration: BoxDecoration(
