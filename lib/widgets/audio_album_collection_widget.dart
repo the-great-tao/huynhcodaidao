@@ -7,7 +7,6 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:frefresh/frefresh.dart';
 
-import 'package:huynhcodaidao/models/user_token.dart';
 import 'package:huynhcodaidao/models/audio_album_list_item.dart';
 import 'package:huynhcodaidao/models/audio_album_list.dart';
 import 'package:huynhcodaidao/models/audio_album_collection.dart';
@@ -37,7 +36,6 @@ class AudioAlbumCollectionWidget extends StatefulWidget {
 
 class _AudioAlbumCollectionWidgetState
     extends State<AudioAlbumCollectionWidget> {
-  final Box _appData = Hive.box('appData');
   final AudioAlbumCollectionRepository _audioAlbumCollectionRepository =
       getIt.get<AudioAlbumCollectionRepository>();
   final FRefreshController _fRefreshController = FRefreshController();
@@ -221,11 +219,6 @@ class _AudioAlbumCollectionWidgetState
                                 )
                               : NetworkImageWidget(
                                   source: _audioAlbumListItem.coverUrl,
-                                  headers: {
-                                    'Authorization': 'Bearer ' +
-                                        (_appData.get('userToken') as UserToken)
-                                            .accessToken,
-                                  },
                                   width: 400.sp,
                                   height: 550.sp,
                                   fit: BoxFit.cover,

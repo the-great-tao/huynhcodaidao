@@ -7,7 +7,6 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:frefresh/frefresh.dart';
 
-import 'package:huynhcodaidao/models/user_token.dart';
 import 'package:huynhcodaidao/models/menu_item.dart';
 import 'package:huynhcodaidao/models/menu_item_list.dart';
 import 'package:huynhcodaidao/models/menu.dart';
@@ -37,7 +36,6 @@ class MenuWidget extends StatefulWidget {
 }
 
 class _MenuWidgetState extends State<MenuWidget> {
-  final Box _appData = Hive.box('appData');
   final MenuRepository _menuRepository = getIt.get<MenuRepository>();
   final FRefreshController _fRefreshController = FRefreshController();
 
@@ -201,11 +199,6 @@ class _MenuWidgetState extends State<MenuWidget> {
                                 )
                               : NetworkImageWidget(
                                   source: _menuItem.primaryIconUrl,
-                                  headers: {
-                                    'Authorization': 'Bearer ' +
-                                        (_appData.get('userToken') as UserToken)
-                                            .accessToken,
-                                  },
                                   width: 120.sp,
                                   height: 120.sp,
                                   fit: BoxFit.cover,
@@ -260,11 +253,6 @@ class _MenuWidgetState extends State<MenuWidget> {
                                 )
                               : NetworkImageWidget(
                                   source: _menuItem.secondaryIconUrl,
-                                  headers: {
-                                    'Authorization': 'Bearer ' +
-                                        (_appData.get('userToken') as UserToken)
-                                            .accessToken,
-                                  },
                                   width: 100.sp,
                                   height: 100.sp,
                                   fit: BoxFit.cover,

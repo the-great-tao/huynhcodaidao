@@ -7,7 +7,6 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:frefresh/frefresh.dart';
 
-import 'package:huynhcodaidao/models/user_token.dart';
 import 'package:huynhcodaidao/models/photo_album_list_item.dart';
 import 'package:huynhcodaidao/models/photo_album_list.dart';
 import 'package:huynhcodaidao/models/photo_album_collection.dart';
@@ -37,7 +36,6 @@ class PhotoAlbumCollectionWidget extends StatefulWidget {
 
 class _PhotoAlbumCollectionWidgetState
     extends State<PhotoAlbumCollectionWidget> {
-  final Box _appData = Hive.box('appData');
   final PhotoAlbumCollectionRepository _photoAlbumCollectionRepository =
       getIt.get<PhotoAlbumCollectionRepository>();
   final FRefreshController _fRefreshController = FRefreshController();
@@ -221,11 +219,6 @@ class _PhotoAlbumCollectionWidgetState
                                 )
                               : NetworkImageWidget(
                                   source: _photoAlbumListItem.coverUrl,
-                                  headers: {
-                                    'Authorization': 'Bearer ' +
-                                        (_appData.get('userToken') as UserToken)
-                                            .accessToken,
-                                  },
                                   width: 400.sp,
                                   height: 550.sp,
                                   fit: BoxFit.cover,
