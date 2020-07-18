@@ -28,12 +28,14 @@ import 'package:huynhcodaidao/repositories/menu_repository.dart';
 import 'package:huynhcodaidao/repositories/photo_album_collection_repository.dart';
 import 'package:huynhcodaidao/repositories/audio_album_collection_repository.dart';
 import 'package:huynhcodaidao/repositories/photo_album_repository.dart';
+import 'package:huynhcodaidao/repositories/audio_album_repository.dart';
 
 import 'package:huynhcodaidao/services/user_service.dart';
 import 'package:huynhcodaidao/services/menu_service.dart';
 import 'package:huynhcodaidao/services/photo_album_collection_service.dart';
 import 'package:huynhcodaidao/services/audio_album_collection_service.dart';
 import 'package:huynhcodaidao/services/photo_album_service.dart';
+import 'package:huynhcodaidao/services/audio_album_service.dart';
 
 import 'package:huynhcodaidao/screens/splash_screen.dart';
 import 'package:huynhcodaidao/screens/login_screen.dart';
@@ -43,6 +45,7 @@ import 'package:huynhcodaidao/screens/webview_screen.dart';
 import 'package:huynhcodaidao/screens/photo_album_collection_screen.dart';
 import 'package:huynhcodaidao/screens/audio_album_collection_screen.dart';
 import 'package:huynhcodaidao/screens/photo_album_screen.dart';
+import 'package:huynhcodaidao/screens/audio_album_screen.dart';
 
 final GetIt getIt = GetIt.instance;
 
@@ -66,6 +69,9 @@ Future setupGetIt() async {
   getIt.registerLazySingleton<PhotoAlbumService>(
     () => PhotoAlbumService(Dio()),
   );
+  getIt.registerLazySingleton<AudioAlbumService>(
+    () => AudioAlbumService(Dio()),
+  );
 
   getIt.registerLazySingleton<UserRepository>(
     () => UserRepository(),
@@ -81,6 +87,9 @@ Future setupGetIt() async {
   );
   getIt.registerLazySingleton<PhotoAlbumRepository>(
     () => PhotoAlbumRepository(),
+  );
+  getIt.registerLazySingleton<AudioAlbumRepository>(
+    () => AudioAlbumRepository(),
   );
 
   getIt.registerLazySingleton<Router>(
@@ -209,6 +218,24 @@ Future setupRouter() async {
       actionTitle = utf8.decode(base64Url.decode(actionTitle));
 
       return PhotoAlbumScreen(
+        actionUrl: actionUrl,
+        actionTitle: actionTitle,
+      );
+    }),
+  );
+
+  router.define(
+    '/audio_album/',
+    transitionType: TransitionType.inFromRight,
+    handler: Handler(
+        handlerFunc: (BuildContext context, Map<String, dynamic> params) {
+      String actionUrl = params['actionUrl'][0];
+      String actionTitle = params['actionTitle'][0];
+
+      actionUrl = utf8.decode(base64Url.decode(actionUrl));
+      actionTitle = utf8.decode(base64Url.decode(actionTitle));
+
+      return AudioAlbumScreen(
         actionUrl: actionUrl,
         actionTitle: actionTitle,
       );
