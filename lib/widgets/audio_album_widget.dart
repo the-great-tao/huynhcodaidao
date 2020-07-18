@@ -247,7 +247,7 @@ class _AudioAlbumWidgetState extends State<AudioAlbumWidget> {
                                   child: Center(
                                     child: Icon(
                                       FontAwesome.volume_up,
-                                      color: Colors.black12,
+                                      color: Colors.black.withOpacity(0.1),
                                       size: 100.sp,
                                     ),
                                   ),
@@ -258,7 +258,7 @@ class _AudioAlbumWidgetState extends State<AudioAlbumWidget> {
                                   child: Center(
                                     child: Icon(
                                       FontAwesome.volume_up,
-                                      color: Colors.black54,
+                                      color: Colors.black.withOpacity(0.7),
                                       size: 100.sp,
                                     ),
                                   ),
@@ -273,7 +273,7 @@ class _AudioAlbumWidgetState extends State<AudioAlbumWidget> {
                                   child: Center(
                                     child: Icon(
                                       Ionicons.ios_paper,
-                                      color: Colors.black12,
+                                      color: Colors.black.withOpacity(0.1),
                                       size: 100.sp,
                                     ),
                                   ),
@@ -284,7 +284,7 @@ class _AudioAlbumWidgetState extends State<AudioAlbumWidget> {
                                   child: Center(
                                     child: Icon(
                                       Ionicons.ios_paper,
-                                      color: Colors.black54,
+                                      color: Colors.black.withOpacity(0.7),
                                       size: 100.sp,
                                     ),
                                   ),
