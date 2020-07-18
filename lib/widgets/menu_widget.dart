@@ -118,7 +118,7 @@ class _MenuWidgetState extends State<MenuWidget> {
                 ? LoadingWidget(height: 80.sp)
                 : Container();
           },
-          footerHeight: _shouldLoad ? 240.sp : 0,
+          footerHeight: _shouldLoad ? 100.sp : 0,
           footerTrigger: 80.sp,
           footerBuilder: (StateSetter setter) {
             return _shouldLoad &&
