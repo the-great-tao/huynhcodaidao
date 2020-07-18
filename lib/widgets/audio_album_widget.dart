@@ -191,7 +191,7 @@ class _AudioAlbumWidgetState extends State<AudioAlbumWidget> {
                         children: <Widget>[
                           _audioAlbumItem.iconUrl == null
                               ? Image.asset(
-                                  'assets/default_audioAlbum_item_icon.png',
+                                  'assets/default_menu_item_icon.png',
                                   width: 120.sp,
                                   height: 120.sp,
                                 )
@@ -216,7 +216,8 @@ class _AudioAlbumWidgetState extends State<AudioAlbumWidget> {
                                     fontWeight: FontWeight.bold,
                                   ),
                                 ),
-                                _audioAlbumItem.artist == null
+                                _audioAlbumItem.artist == null ||
+                                        _audioAlbumItem.artist == ''
                                     ? Container()
                                     : Text(
                                         _audioAlbumItem.artist,
@@ -225,7 +226,8 @@ class _AudioAlbumWidgetState extends State<AudioAlbumWidget> {
                                           fontStyle: FontStyle.italic,
                                         ),
                                       ),
-                                _audioAlbumItem.description == null
+                                _audioAlbumItem.description == null ||
+                                        _audioAlbumItem.description == ''
                                     ? Container()
                                     : Text(
                                         _audioAlbumItem.description,
