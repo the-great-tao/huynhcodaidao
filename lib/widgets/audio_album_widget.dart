@@ -143,6 +143,9 @@ class _AudioAlbumWidgetState extends State<AudioAlbumWidget> {
           shouldLoad: _shouldLoad,
           child: Column(
             children: <Widget>[
+              SizedBox(
+                height: 16.sp,
+              ),
               ListView.builder(
                 primary: false,
                 shrinkWrap: true,
@@ -243,7 +246,7 @@ class _AudioAlbumWidgetState extends State<AudioAlbumWidget> {
                                   height: 100.sp,
                                   child: Center(
                                     child: Icon(
-                                      Feather.play_circle,
+                                      FontAwesome.volume_up,
                                       color: Colors.black12,
                                       size: 100.sp,
                                     ),
@@ -254,8 +257,8 @@ class _AudioAlbumWidgetState extends State<AudioAlbumWidget> {
                                   height: 100.sp,
                                   child: Center(
                                     child: Icon(
-                                      Feather.play_circle,
-                                      color: Colors.black87,
+                                      FontAwesome.volume_up,
+                                      color: Colors.black54,
                                       size: 100.sp,
                                     ),
                                   ),
@@ -269,7 +272,7 @@ class _AudioAlbumWidgetState extends State<AudioAlbumWidget> {
                                   height: 100.sp,
                                   child: Center(
                                     child: Icon(
-                                      Feather.file_text,
+                                      Ionicons.ios_paper,
                                       color: Colors.black12,
                                       size: 100.sp,
                                     ),
@@ -280,8 +283,8 @@ class _AudioAlbumWidgetState extends State<AudioAlbumWidget> {
                                   height: 100.sp,
                                   child: Center(
                                     child: Icon(
-                                      Feather.file_text,
-                                      color: Colors.black87,
+                                      Ionicons.ios_paper,
+                                      color: Colors.black54,
                                       size: 100.sp,
                                     ),
                                   ),
