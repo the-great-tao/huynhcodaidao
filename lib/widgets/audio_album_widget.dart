@@ -171,7 +171,7 @@ class _AudioAlbumWidgetState extends State<AudioAlbumWidget> {
                       );
                     },
                     child: Container(
-                      padding: EdgeInsets.fromLTRB(40.sp, 40.sp, 20.sp, 40.sp),
+                      padding: EdgeInsets.fromLTRB(30.sp, 40.sp, 20.sp, 40.sp),
                       margin: EdgeInsets.fromLTRB(16.sp, 0, 16.sp, 16.sp),
                       decoration: BoxDecoration(
                         color: Colors.white,
@@ -199,7 +199,7 @@ class _AudioAlbumWidgetState extends State<AudioAlbumWidget> {
                                   fit: BoxFit.cover,
                                 ),
                           SizedBox(
-                            width: 40.sp,
+                            width: 30.sp,
                           ),
                           Expanded(
                             child: Column(
@@ -239,24 +239,24 @@ class _AudioAlbumWidgetState extends State<AudioAlbumWidget> {
                           ),
                           _audioAlbumItem.audioUrl == null
                               ? Container(
-                                  width: 90.sp,
-                                  height: 90.sp,
+                                  width: 100.sp,
+                                  height: 100.sp,
                                   child: Center(
                                     child: Icon(
                                       Feather.play_circle,
                                       color: Colors.black12,
-                                      size: 90.sp,
+                                      size: 100.sp,
                                     ),
                                   ),
                                 )
                               : Container(
-                                  width: 90.sp,
-                                  height: 90.sp,
+                                  width: 100.sp,
+                                  height: 100.sp,
                                   child: Center(
                                     child: Icon(
                                       Feather.play_circle,
                                       color: Colors.black87,
-                                      size: 90.sp,
+                                      size: 100.sp,
                                     ),
                                   ),
                                 ),
@@ -265,24 +265,24 @@ class _AudioAlbumWidgetState extends State<AudioAlbumWidget> {
                           ),
                           _audioAlbumItem.actionUrl == null
                               ? Container(
-                                  width: 90.sp,
-                                  height: 90.sp,
+                                  width: 100.sp,
+                                  height: 100.sp,
                                   child: Center(
                                     child: Icon(
                                       Feather.file_text,
                                       color: Colors.black12,
-                                      size: 90.sp,
+                                      size: 100.sp,
                                     ),
                                   ),
                                 )
                               : Container(
-                                  width: 90.sp,
-                                  height: 90.sp,
+                                  width: 100.sp,
+                                  height: 100.sp,
                                   child: Center(
                                     child: Icon(
                                       Feather.file_text,
                                       color: Colors.black87,
-                                      size: 90.sp,
+                                      size: 100.sp,
                                     ),
                                   ),
                                 ),
