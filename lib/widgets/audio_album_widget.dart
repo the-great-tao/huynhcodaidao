@@ -2,10 +2,15 @@ import 'package:get_it/get_it.dart';
 
 import 'package:flutter/material.dart';
 import 'package:responsive_widgets/responsive_widgets.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:frefresh/frefresh.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
+
+import 'package:huynhcodaidao/blocs/audio_controller_event.dart';
+import 'package:huynhcodaidao/blocs/audio_controller_bloc.dart';
+
 import 'package:huynhcodaidao/models/audio_album_item.dart';
 import 'package:huynhcodaidao/models/audio_album_page.dart';
 import 'package:huynhcodaidao/models/audio_album.dart';
@@ -43,6 +48,23 @@ class _AudioAlbumWidgetState extends State<AudioAlbumWidget> {
   List<AudioAlbumItem> _audioAlbumItems;
   int _page = 1;
   bool _shouldLoad = false;
+
+  void playAudio(
+    BuildContext context, {
+    AudioAlbum audioAlbum,
+    AudioAlbumItem audioAlbumItem,
+  }) {
+    // ignore: close_sinks
+    AudioControllerBloc audioControllerBloc =
+        BlocProvider.of<AudioControllerBloc>(context);
+
+    audioControllerBloc.add(
+      AudioControllerPlay(
+        audioAlbum: audioAlbum,
+        audioAlbumItem: audioAlbumItem,
+      ),
+    );
+  }
 
   @override
   void initState() {
@@ -250,7 +272,13 @@ class _AudioAlbumWidgetState extends State<AudioAlbumWidget> {
                                     ),
                                   )
                                 : GestureDetector(
-                                    onTap: () {},
+                                    onTap: () {
+                                      playAudio(
+                                        context,
+                                        audioAlbum: _audioAlbum,
+                                        audioAlbumItem: _audioAlbumItem,
+                                      );
+                                    },
                                     child: Container(
                                       width: 100.sp,
                                       height: 100.sp,

@@ -1,4 +1,8 @@
+import 'package:meta/meta.dart';
 import 'package:equatable/equatable.dart';
+
+import 'package:huynhcodaidao/models/audio_album.dart';
+import 'package:huynhcodaidao/models/audio_album_item.dart';
 
 abstract class AudioControllerEvent extends Equatable {
   const AudioControllerEvent();
@@ -13,3 +17,19 @@ abstract class AudioControllerEvent extends Equatable {
 class AudioControllerHide extends AudioControllerEvent {}
 
 class AudioControllerShow extends AudioControllerEvent {}
+
+class AudioControllerPlay extends AudioControllerEvent {
+  final AudioAlbum audioAlbum;
+  final AudioAlbumItem audioAlbumItem;
+
+  const AudioControllerPlay({
+    @required this.audioAlbum,
+    @required this.audioAlbumItem,
+  });
+
+  @override
+  List<Object> get props => [
+        audioAlbum,
+        audioAlbumItem,
+      ];
+}

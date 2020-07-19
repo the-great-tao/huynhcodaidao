@@ -82,15 +82,25 @@ class _AppBar02WidgetState extends State<AppBar02Widget> {
                     child: _assetsAudioPlayer.builderIsPlaying(
                       builder: (context, isPlaying) {
                         return isPlaying
-                            ? Icon(
-                                FontAwesome.stop,
-                                color: Colors.white,
-                                size: 100.sp,
+                            ? GestureDetector(
+                                onTap: () {
+                                  _assetsAudioPlayer.pause();
+                                },
+                                child: Icon(
+                                  FontAwesome.pause,
+                                  color: Colors.white,
+                                  size: 100.sp,
+                                ),
                               )
-                            : Icon(
-                                FontAwesome.play,
-                                color: Colors.white,
-                                size: 100.sp,
+                            : GestureDetector(
+                                onTap: () {
+                                  _assetsAudioPlayer.play();
+                                },
+                                child: Icon(
+                                  FontAwesome.play,
+                                  color: Colors.white,
+                                  size: 100.sp,
+                                ),
                               );
                       },
                     ),
