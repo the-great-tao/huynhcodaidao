@@ -1,24 +1,21 @@
 import 'package:hive/hive.dart';
 import 'package:flutter/material.dart';
-import 'package:responsive_widgets/responsive_widgets.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 import 'package:huynhcodaidao/models/user_token.dart';
 
-import 'package:huynhcodaidao/ui_components/linear_gradients.dart';
-
-import 'package:huynhcodaidao/widgets/app_bar_02_widget.dart';
+import 'package:huynhcodaidao/screens/base_screen.dart';
 
 class WebviewScreen extends StatefulWidget {
-  final String actionUrl;
   final String actionTitle;
+  final String actionUrl;
 
-  WebviewScreen({
+  const WebviewScreen({
     Key key,
-    this.actionUrl,
     this.actionTitle,
-  })  : assert(actionUrl != null),
-        assert(actionTitle != null),
+    this.actionUrl,
+  })  : assert(actionTitle != null),
+        assert(actionUrl != null),
         super(key: key);
 
   @override
@@ -32,39 +29,20 @@ class _WebviewScreenState extends State<WebviewScreen> {
 
   @override
   Widget build(BuildContext context) {
-    ResponsiveWidgets.init(
-      context,
-      width: 1080,
-      height: 1920,
-      allowFontScaling: true,
-    );
-
-    return Container(
-      decoration: BoxDecoration(
-        gradient: LinearGradients.main,
-      ),
-      child: SafeArea(
-        child: Scaffold(
-          appBar: AppBar02Widget(
-            height: 160.sp,
-            title: widget.actionTitle,
-          ),
-          body: Container(
-            child: WebView(
-              javascriptMode: JavascriptMode.unrestricted,
-              onWebViewCreated: (WebViewController webViewController) {
-                _webviewController = webViewController;
-                _webviewController.loadUrl(
-                  widget.actionUrl,
-                  headers: {
-                    'Authorization': 'Bearer ' +
-                        (_appData.get('userToken') as UserToken).accessToken,
-                  },
-                );
-              },
-            ),
-          ),
-        ),
+    return BaseScreen(
+      title: widget.actionTitle,
+      body: WebView(
+        javascriptMode: JavascriptMode.unrestricted,
+        onWebViewCreated: (WebViewController webViewController) {
+          _webviewController = webViewController;
+          _webviewController.loadUrl(
+            widget.actionUrl,
+            headers: {
+              'Authorization': 'Bearer ' +
+                  (_appData.get('userToken') as UserToken).accessToken,
+            },
+          );
+        },
       ),
     );
   }
