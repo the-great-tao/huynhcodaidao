@@ -1,7 +1,3 @@
-import 'dart:io';
-import 'dart:math';
-
-import 'package:hive/hive.dart';
 import 'package:get_it/get_it.dart';
 
 import 'package:flutter/material.dart';
@@ -10,10 +6,6 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:frefresh/frefresh.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
-import 'package:flutter_cache_manager/flutter_cache_manager.dart';
-import 'package:assets_audio_player/assets_audio_player.dart';
-
-import 'package:huynhcodaidao/models/user_token.dart';
 import 'package:huynhcodaidao/models/audio_album_item.dart';
 import 'package:huynhcodaidao/models/audio_album_page.dart';
 import 'package:huynhcodaidao/models/audio_album.dart';
@@ -40,10 +32,8 @@ class AudioAlbumWidget extends StatefulWidget {
 }
 
 class _AudioAlbumWidgetState extends State<AudioAlbumWidget> {
-  final Box _appData = Hive.box('appData');
   final AudioAlbumRepository _audioAlbumRepository =
       getIt.get<AudioAlbumRepository>();
-  final AssetsAudioPlayer _assetsAudioPlayer = getIt.get<AssetsAudioPlayer>();
   final FRefreshController _fRefreshController = FRefreshController();
 
   dynamic _state;
@@ -173,7 +163,7 @@ class _AudioAlbumWidgetState extends State<AudioAlbumWidget> {
                     }
                   }
 
-                  bool star = Random().nextInt(100) % 2 == 0;
+                  bool star = _audioAlbumItem.id % 2 == 0;
 
                   return Stack(
                     children: <Widget>[
@@ -260,25 +250,7 @@ class _AudioAlbumWidgetState extends State<AudioAlbumWidget> {
                                     ),
                                   )
                                 : GestureDetector(
-                                    onTap: () async {
-                                      File file = await DefaultCacheManager()
-                                          .getSingleFile(
-                                        _audioAlbumItem.audioUrl,
-                                        headers: {
-                                          'Authorization': 'Bearer ' +
-                                              (_appData.get('userToken')
-                                                      as UserToken)
-                                                  .accessToken,
-                                        },
-                                      );
-                                      try {
-                                        await _assetsAudioPlayer.open(
-                                          Audio.file(file.path),
-                                        );
-                                      } catch (exception) {
-                                        print(exception);
-                                      }
-                                    },
+                                    onTap: () {},
                                     child: Container(
                                       width: 100.sp,
                                       height: 100.sp,
@@ -344,7 +316,7 @@ class _AudioAlbumWidgetState extends State<AudioAlbumWidget> {
                                 ? null
                                 : Border.all(
                                     color: Colors.black26,
-                              width: 4.sp
+                                    width: 4.sp,
                                   ),
                             borderRadius: BorderRadius.only(
                               topLeft: Radius.circular(16.sp),
