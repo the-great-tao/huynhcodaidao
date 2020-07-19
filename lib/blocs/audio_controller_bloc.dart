@@ -49,7 +49,17 @@ class AudioControllerBloc
         },
       );
 
-      await _assetsAudioPlayer.open(Audio.file(audio.path));
+      await _assetsAudioPlayer.open(
+        Audio.file(
+          audio.path,
+          metas: Metas(
+            album: audioAlbum.title,
+            title: audioAlbumItem.title,
+            artist: audioAlbumItem.artist,
+          ),
+        ),
+        showNotification: true,
+      );
 
       yield AudioControllerPlaying(
         audioAlbum: audioAlbum,
