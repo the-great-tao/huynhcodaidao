@@ -23,6 +23,8 @@ import 'package:huynhcodaidao/blocs/authentication_event.dart';
 import 'package:huynhcodaidao/blocs/authentication_state.dart';
 import 'package:huynhcodaidao/blocs/authentication_bloc.dart';
 import 'package:huynhcodaidao/blocs/login_screen_bloc.dart';
+import 'package:huynhcodaidao/blocs/audio_controller_event.dart';
+import 'package:huynhcodaidao/blocs/audio_controller_bloc.dart';
 
 import 'package:huynhcodaidao/repositories/user_repository.dart';
 import 'package:huynhcodaidao/repositories/menu_repository.dart';
@@ -264,10 +266,19 @@ void main() async {
   runApp(
     DevicePreview(
       enabled: !kReleaseMode,
-      builder: (BuildContext context) => BlocProvider<AuthenticationBloc>(
-        create: (BuildContext context) {
-          return AuthenticationBloc()..add(AuthenticationStarted());
-        },
+      builder: (BuildContext context) => MultiBlocProvider(
+        providers: [
+          BlocProvider<AuthenticationBloc>(
+            create: (BuildContext context) {
+              return AuthenticationBloc()..add(AuthenticationStarted());
+            },
+          ),
+          BlocProvider<AudioControllerBloc>(
+            create: (BuildContext context) {
+              return AudioControllerBloc()..add(AudioControllerHide());
+            },
+          ),
+        ],
         child: MyApp(),
       ),
     ),
