@@ -48,6 +48,13 @@ class AudioControllerBloc
               'Bearer ' + (_appData.get('userToken') as UserToken).accessToken,
         },
       );
+      File image = await _defaultCacheManager.getSingleFile(
+        audioAlbumItem.iconUrl,
+        headers: {
+          'Authorization':
+              'Bearer ' + (_appData.get('userToken') as UserToken).accessToken,
+        },
+      );
 
       await _assetsAudioPlayer.open(
         Audio.file(
@@ -56,6 +63,7 @@ class AudioControllerBloc
             album: audioAlbum.title,
             title: audioAlbumItem.title,
             artist: audioAlbumItem.artist,
+            image: MetasImage.file(image.path),
           ),
         ),
         showNotification: true,
