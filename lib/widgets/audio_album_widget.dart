@@ -1,3 +1,7 @@
+import 'dart:io';
+import 'dart:math';
+
+import 'package:hive/hive.dart';
 import 'package:get_it/get_it.dart';
 
 import 'package:flutter/material.dart';
@@ -6,7 +10,10 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:frefresh/frefresh.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
+import 'package:flutter_cache_manager/flutter_cache_manager.dart';
+import 'package:assets_audio_player/assets_audio_player.dart';
 
+import 'package:huynhcodaidao/models/user_token.dart';
 import 'package:huynhcodaidao/models/audio_album_item.dart';
 import 'package:huynhcodaidao/models/audio_album_page.dart';
 import 'package:huynhcodaidao/models/audio_album.dart';
@@ -33,8 +40,10 @@ class AudioAlbumWidget extends StatefulWidget {
 }
 
 class _AudioAlbumWidgetState extends State<AudioAlbumWidget> {
+  final Box _appData = Hive.box('appData');
   final AudioAlbumRepository _audioAlbumRepository =
       getIt.get<AudioAlbumRepository>();
+  final AssetsAudioPlayer _assetsAudioPlayer = getIt.get<AssetsAudioPlayer>();
   final FRefreshController _fRefreshController = FRefreshController();
 
   dynamic _state;
@@ -164,136 +173,198 @@ class _AudioAlbumWidgetState extends State<AudioAlbumWidget> {
                     }
                   }
 
-                  return GestureDetector(
-                    onTap: () {
-                      RouterService.navigateTo(
-                        context: context,
-                        actionUrl: _audioAlbumItem.actionUrl,
-                        actionTypeName: _audioAlbumItem.actionTypeName,
-                        actionTitle: _audioAlbumItem.actionTitle,
-                      );
-                    },
-                    child: Container(
-                      padding: EdgeInsets.fromLTRB(30.sp, 40.sp, 20.sp, 40.sp),
-                      margin: EdgeInsets.fromLTRB(16.sp, 0, 16.sp, 16.sp),
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(16.sp),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.black12,
-                            blurRadius: 4.sp,
-                            spreadRadius: 2.sp,
-                          ),
-                        ],
-                      ),
-                      child: Row(
-                        children: <Widget>[
-                          _audioAlbumItem.iconUrl == null
-                              ? Image.asset(
-                                  'assets/default_menu_item_icon.png',
-                                  width: 120.sp,
-                                  height: 120.sp,
-                                )
-                              : NetworkImageWidget(
-                                  source: _audioAlbumItem.iconUrl,
-                                  width: 120.sp,
-                                  height: 120.sp,
-                                  fit: BoxFit.cover,
-                                ),
-                          SizedBox(
-                            width: 30.sp,
-                          ),
-                          Expanded(
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  _audioAlbumItem.title,
-                                  style: GoogleFonts.robotoSlab(
-                                    fontSize: 48.sp,
-                                    fontWeight: FontWeight.bold,
+                  bool star = Random().nextInt(100) % 2 == 0;
+
+                  return Stack(
+                    children: <Widget>[
+                      Container(
+                        padding:
+                            EdgeInsets.fromLTRB(30.sp, 40.sp, 20.sp, 40.sp),
+                        margin: EdgeInsets.fromLTRB(16.sp, 0, 16.sp, 16.sp),
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(16.sp),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.black12,
+                              blurRadius: 4.sp,
+                              spreadRadius: 2.sp,
+                            ),
+                          ],
+                        ),
+                        child: Row(
+                          children: <Widget>[
+                            _audioAlbumItem.iconUrl == null
+                                ? Image.asset(
+                                    'assets/default_menu_item_icon.png',
+                                    width: 120.sp,
+                                    height: 120.sp,
+                                  )
+                                : NetworkImageWidget(
+                                    source: _audioAlbumItem.iconUrl,
+                                    width: 120.sp,
+                                    height: 120.sp,
+                                    fit: BoxFit.cover,
                                   ),
-                                ),
-                                _audioAlbumItem.artist == null ||
-                                        _audioAlbumItem.artist == ''
-                                    ? Container()
-                                    : Text(
-                                        _audioAlbumItem.artist,
-                                        style: GoogleFonts.robotoSlab(
-                                          fontSize: 38.sp,
-                                          fontStyle: FontStyle.italic,
+                            SizedBox(
+                              width: 30.sp,
+                            ),
+                            Expanded(
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    _audioAlbumItem.title,
+                                    style: GoogleFonts.robotoSlab(
+                                      fontSize: 48.sp,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                  _audioAlbumItem.artist == null ||
+                                          _audioAlbumItem.artist == ''
+                                      ? Container()
+                                      : Text(
+                                          _audioAlbumItem.artist,
+                                          style: GoogleFonts.robotoSlab(
+                                            fontSize: 38.sp,
+                                            fontStyle: FontStyle.italic,
+                                          ),
+                                        ),
+                                  _audioAlbumItem.description == null ||
+                                          _audioAlbumItem.description == ''
+                                      ? Container()
+                                      : Text(
+                                          _audioAlbumItem.description,
+                                          style: GoogleFonts.robotoSlab(
+                                            fontSize: 38.sp,
+                                            fontStyle: FontStyle.italic,
+                                          ),
+                                        ),
+                                ],
+                              ),
+                            ),
+                            SizedBox(
+                              width: 10.sp,
+                            ),
+                            _audioAlbumItem.audioUrl == null
+                                ? Container(
+                                    width: 100.sp,
+                                    height: 100.sp,
+                                    child: Center(
+                                      child: Icon(
+                                        FontAwesome.volume_up,
+                                        color: Colors.black.withOpacity(0.1),
+                                        size: 100.sp,
+                                      ),
+                                    ),
+                                  )
+                                : GestureDetector(
+                                    onTap: () async {
+                                      File file = await DefaultCacheManager()
+                                          .getSingleFile(
+                                        _audioAlbumItem.audioUrl,
+                                        headers: {
+                                          'Authorization': 'Bearer ' +
+                                              (_appData.get('userToken')
+                                                      as UserToken)
+                                                  .accessToken,
+                                        },
+                                      );
+                                      try {
+                                        await _assetsAudioPlayer.open(
+                                          Audio.file(file.path),
+                                        );
+                                      } catch (exception) {
+                                        print(exception);
+                                      }
+                                    },
+                                    child: Container(
+                                      width: 100.sp,
+                                      height: 100.sp,
+                                      child: Center(
+                                        child: Icon(
+                                          FontAwesome.volume_up,
+                                          color: Colors.black.withOpacity(0.7),
+                                          size: 100.sp,
                                         ),
                                       ),
-                                _audioAlbumItem.description == null ||
-                                        _audioAlbumItem.description == ''
-                                    ? Container()
-                                    : Text(
-                                        _audioAlbumItem.description,
-                                        style: GoogleFonts.robotoSlab(
-                                          fontSize: 38.sp,
-                                          fontStyle: FontStyle.italic,
+                                    ),
+                                  ),
+                            SizedBox(
+                              width: 10.sp,
+                            ),
+                            _audioAlbumItem.actionUrl == null
+                                ? Container(
+                                    width: 100.sp,
+                                    height: 100.sp,
+                                    child: Center(
+                                      child: Icon(
+                                        Ionicons.ios_paper,
+                                        color: Colors.black.withOpacity(0.1),
+                                        size: 100.sp,
+                                      ),
+                                    ),
+                                  )
+                                : GestureDetector(
+                                    onTap: () {
+                                      RouterService.navigateTo(
+                                        context: context,
+                                        actionUrl: _audioAlbumItem.actionUrl,
+                                        actionTypeName:
+                                            _audioAlbumItem.actionTypeName,
+                                        actionTitle:
+                                            _audioAlbumItem.actionTitle,
+                                      );
+                                    },
+                                    child: Container(
+                                      width: 100.sp,
+                                      height: 100.sp,
+                                      child: Center(
+                                        child: Icon(
+                                          Ionicons.ios_paper,
+                                          color: Colors.black.withOpacity(0.7),
+                                          size: 100.sp,
                                         ),
                                       ),
-                              ],
+                                    ),
+                                  ),
+                          ],
+                        ),
+                      ),
+                      Positioned(
+                        left: 0,
+                        child: Container(
+                          width: 50.sp,
+                          height: 50.sp,
+                          margin: EdgeInsets.only(left: 16.sp),
+                          decoration: BoxDecoration(
+                            color: star ? Colors.amber : Colors.white,
+                            border: star
+                                ? null
+                                : Border.all(
+                                    color: Colors.black26,
+                              width: 4.sp
+                                  ),
+                            borderRadius: BorderRadius.only(
+                              topLeft: Radius.circular(16.sp),
+                              bottomRight: Radius.circular(16.sp),
                             ),
                           ),
-                          SizedBox(
-                            width: 10.sp,
-                          ),
-                          _audioAlbumItem.audioUrl == null
-                              ? Container(
-                                  width: 100.sp,
-                                  height: 100.sp,
-                                  child: Center(
-                                    child: Icon(
-                                      FontAwesome.volume_up,
-                                      color: Colors.black.withOpacity(0.1),
-                                      size: 100.sp,
-                                    ),
-                                  ),
+                          child: star
+                              ? Icon(
+                                  Icons.star,
+                                  color: Colors.white,
+                                  size: 40.sp,
                                 )
-                              : Container(
-                                  width: 100.sp,
-                                  height: 100.sp,
-                                  child: Center(
-                                    child: Icon(
-                                      FontAwesome.volume_up,
-                                      color: Colors.black.withOpacity(0.7),
-                                      size: 100.sp,
-                                    ),
-                                  ),
+                              : Icon(
+                                  Icons.star_border,
+                                  color: Colors.black26,
+                                  size: 40.sp,
                                 ),
-                          SizedBox(
-                            width: 10.sp,
-                          ),
-                          _audioAlbumItem.actionUrl == null
-                              ? Container(
-                                  width: 100.sp,
-                                  height: 100.sp,
-                                  child: Center(
-                                    child: Icon(
-                                      Ionicons.ios_paper,
-                                      color: Colors.black.withOpacity(0.1),
-                                      size: 100.sp,
-                                    ),
-                                  ),
-                                )
-                              : Container(
-                                  width: 100.sp,
-                                  height: 100.sp,
-                                  child: Center(
-                                    child: Icon(
-                                      Ionicons.ios_paper,
-                                      color: Colors.black.withOpacity(0.7),
-                                      size: 100.sp,
-                                    ),
-                                  ),
-                                ),
-                        ],
+                        ),
                       ),
-                    ),
+                    ],
                   );
                 },
               ),

@@ -14,6 +14,7 @@ import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:bloc/bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:assets_audio_player/assets_audio_player.dart';
 
 import 'package:huynhcodaidao/models/user_token.dart';
 
@@ -94,6 +95,9 @@ Future setupGetIt() async {
 
   getIt.registerLazySingleton<Router>(
     () => Router(),
+  );
+  getIt.registerLazySingleton<AssetsAudioPlayer>(
+    () => AssetsAudioPlayer(),
   );
 }
 
