@@ -6,7 +6,7 @@ import 'package:get_it/get_it.dart';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart' as Services;
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' hide Router;
 
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:device_preview/device_preview.dart';
@@ -291,7 +291,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       onGenerateRoute: getIt.get<Router>().generator,
       debugShowCheckedModeBanner: false,
-      locale: DevicePreview.of(context).locale,
+      locale: DevicePreview.locale(context),
       builder: DevicePreview.appBuilder,
       title: 'Flutter Demo',
       theme: ThemeData(
