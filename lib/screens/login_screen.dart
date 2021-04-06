@@ -175,7 +175,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               margin: EdgeInsetsResponsive.all(200),
                               child: Image(
                                 image:
-                                    AssetImage('assets/login_screen_logo.png'),
+                                    AssetImage('assets/logo.png'),
                               ),
                               decoration: BoxDecoration(
                                 shape: BoxShape.circle,

@@ -265,7 +265,7 @@ void main() async {
 
   runApp(
     DevicePreview(
-      enabled: !kReleaseMode,
+      enabled: false, // !kReleaseMode,
       builder: (BuildContext context) => MultiBlocProvider(
         providers: [
           BlocProvider<AuthenticationBloc>(

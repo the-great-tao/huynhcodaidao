@@ -24,7 +24,7 @@ class SplashScreen extends StatelessWidget {
           child: ContainerResponsive(
             width: 600,
             child: Image(
-              image: AssetImage('assets/login_screen_logo.png'),
+              image: AssetImage('assets/logo.png'),
             ),
             decoration: BoxDecoration(
               shape: BoxShape.circle,
