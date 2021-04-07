@@ -9,6 +9,10 @@ PODS:
   - FMDB (2.7.5):
     - FMDB/standard (= 2.7.5)
   - FMDB/standard (2.7.5)
+  - OneSignal (2.16.3)
+  - onesignal_flutter (2.6.3):
+    - Flutter
+    - OneSignal (= 2.16.3)
   - path_provider (0.0.1):
     - Flutter
   - shared_preferences (0.0.1):
@@ -24,6 +28,8 @@ DEPENDENCIES:
   - assets_audio_player_web (from `.symlinks/plugins/assets_audio_player_web/ios`)
   - Flutter (from `Flutter`)
   - flutter_secure_storage (from `.symlinks/plugins/flutter_secure_storage/ios`)
+  - OneSignal (< 3.0, >= 2.9.3)
+  - onesignal_flutter (from `.symlinks/plugins/onesignal_flutter/ios`)
   - path_provider (from `.symlinks/plugins/path_provider/ios`)
   - shared_preferences (from `.symlinks/plugins/shared_preferences/ios`)
   - sqflite (from `.symlinks/plugins/sqflite/ios`)
@@ -32,6 +38,7 @@ DEPENDENCIES:
 SPEC REPOS:
   trunk:
     - FMDB
+    - OneSignal
 
 EXTERNAL SOURCES:
   assets_audio_player:
@@ -42,6 +49,8 @@ EXTERNAL SOURCES:
     :path: Flutter
   flutter_secure_storage:
     :path: ".symlinks/plugins/flutter_secure_storage/ios"
+  onesignal_flutter:
+    :path: ".symlinks/plugins/onesignal_flutter/ios"
   path_provider:
     :path: ".symlinks/plugins/path_provider/ios"
   shared_preferences:
@@ -57,11 +66,13 @@ SPEC CHECKSUMS:
   Flutter: 434fef37c0980e73bb6479ef766c45957d4b510c
   flutter_secure_storage: 7953c38a04c3fdbb00571bcd87d8e3b5ceb9daec
   FMDB: 2ce00b547f966261cd18927a3ddb07cb6f3db82a
+  OneSignal: fd223b247d46e0aa97c7712f3e031c29798d018a
+  onesignal_flutter: 605e4ed3c95a9705db9f5073a66ac6d0045b3fee
   path_provider: abfe2b5c733d04e238b0d8691db0cfd63a27a93c
   shared_preferences: af6bfa751691cdc24be3045c43ec037377ada40d
   sqflite: 4001a31ff81d210346b500c55b17f4d6c7589dd0
   webview_flutter: d2b4d6c66968ad042ad94cbb791f5b72b4678a96
 
-PODFILE CHECKSUM: aafe91acc616949ddb318b77800a7f51bffa2a4c
+PODFILE CHECKSUM: e7ca51dffe1e8ed3a318c707aca030e833247791
 
 COCOAPODS: 1.10.1

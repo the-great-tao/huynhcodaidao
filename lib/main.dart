@@ -50,6 +50,8 @@ import 'package:huynhcodaidao/screens/audio_album_collection_screen.dart';
 import 'package:huynhcodaidao/screens/photo_album_screen.dart';
 import 'package:huynhcodaidao/screens/audio_album_screen.dart';
 
+import 'package:onesignal_flutter/onesignal_flutter.dart';
+
 final GetIt getIt = GetIt.instance;
 
 Future setupGetIt() async {
@@ -249,6 +251,23 @@ Future setupRouter() async {
   );
 }
 
+Future setupOneSignal() async {
+  OneSignal.shared.setLogLevel(OSLogLevel.verbose, OSLogLevel.none);
+
+  OneSignal.shared.init(
+      'f48e46de-3348-4775-9c38-da36af3b4199',
+      iOSSettings: {
+        OSiOSSettings.autoPrompt: false,
+        OSiOSSettings.inAppLaunchUrl: false
+      }
+  );
+  OneSignal.shared.setInFocusDisplayType(OSNotificationDisplayType.notification);
+
+  await OneSignal.shared.promptUserForPushNotificationPermission(fallbackToSettings: true);
+
+  await OneSignal.shared.setExternalUserId('123456789');
+}
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
@@ -260,6 +279,7 @@ void main() async {
   await setupGetIt();
   await setupAppData();
   await setupRouter();
+  await setupOneSignal();
 
   Bloc.observer = GlobalBlocObserver();
 
