@@ -9,7 +9,7 @@ part of 'menu_service.dart';
 class _MenuService implements MenuService {
   _MenuService(this._dio, {this.baseUrl}) {
     ArgumentError.checkNotNull(_dio, '_dio');
-    this.baseUrl ??= 'https://nova.huynhcodaidao.com/';
+    baseUrl ??= 'https://nova.huynhcodaidao.com/';
   }
 
   final Dio _dio;
@@ -17,12 +17,12 @@ class _MenuService implements MenuService {
   String baseUrl;
 
   @override
-  get({path, token, page}) async {
+  Future<Menu> get({path, token, page}) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{r'page': page};
     queryParameters.removeWhere((k, v) => v == null);
     final _data = <String, dynamic>{};
-    final Response<Map<String, dynamic>> _result = await _dio.request('$path',
+    final _result = await _dio.request<Map<String, dynamic>>('$path',
         queryParameters: queryParameters,
         options: RequestOptions(
             method: 'GET',

@@ -50,6 +50,12 @@ import 'package:huynhcodaidao/screens/audio_album_collection_screen.dart';
 import 'package:huynhcodaidao/screens/photo_album_screen.dart';
 import 'package:huynhcodaidao/screens/audio_album_screen.dart';
 
+import 'package:huynhcodaidao/modules/message/message_category_repository.dart';
+import 'package:huynhcodaidao/modules/message/message_category_service.dart';
+import 'package:huynhcodaidao/modules/message/message_category_screen.dart';
+
+import 'package:huynhcodaidao/screens/pdf_view_screen.dart';
+
 import 'package:onesignal_flutter/onesignal_flutter.dart';
 
 final GetIt getIt = GetIt.instance;
@@ -57,6 +63,12 @@ final GetIt getIt = GetIt.instance;
 Future setupGetIt() async {
   getIt.registerLazySingleton<FlutterSecureStorage>(
     () => FlutterSecureStorage(),
+  );
+  getIt.registerLazySingleton<Router>(
+    () => Router(),
+  );
+  getIt.registerLazySingleton<AssetsAudioPlayer>(
+    () => AssetsAudioPlayer(),
   );
 
   getIt.registerLazySingleton<UserService>(
@@ -97,11 +109,11 @@ Future setupGetIt() async {
     () => AudioAlbumRepository(),
   );
 
-  getIt.registerLazySingleton<Router>(
-    () => Router(),
+  getIt.registerLazySingleton<MessageCategoryService>(
+    () => MessageCategoryService(Dio()),
   );
-  getIt.registerLazySingleton<AssetsAudioPlayer>(
-    () => AssetsAudioPlayer(),
+  getIt.registerLazySingleton<MessageCategoryRepository>(
+    () => MessageCategoryRepository(),
   );
 }
 
@@ -249,21 +261,59 @@ Future setupRouter() async {
       );
     }),
   );
+
+  router.define(
+    '/message_list/',
+    transitionType: TransitionType.inFromRight,
+    handler: Handler(
+        handlerFunc: (BuildContext context, Map<String, dynamic> params) {
+      String actionUrl = params['actionUrl'][0];
+      String actionTitle = params['actionTitle'][0];
+
+      actionUrl = utf8.decode(base64Url.decode(actionUrl));
+      actionTitle = utf8.decode(base64Url.decode(actionTitle));
+
+      return MessageCategoryScreen(
+        actionUrl: actionUrl,
+        actionTitle: actionTitle,
+      );
+    }),
+  );
+
+  router.define(
+    '/pdf_view/',
+    transitionType: TransitionType.inFromRight,
+    handler: Handler(
+        handlerFunc: (BuildContext context, Map<String, dynamic> params) {
+          String actionUrl = params['actionUrl'][0];
+          String actionTitle = params['actionTitle'][0];
+
+          actionUrl = utf8.decode(base64Url.decode(actionUrl));
+          actionTitle = utf8.decode(base64Url.decode(actionTitle));
+
+          return PdfViewScreen(
+            actionUrl: actionUrl,
+            actionTitle: actionTitle,
+          );
+        }),
+  );
 }
 
 Future setupOneSignal() async {
   OneSignal.shared.setLogLevel(OSLogLevel.verbose, OSLogLevel.none);
 
   OneSignal.shared.init(
-      'f48e46de-3348-4775-9c38-da36af3b4199',
-      iOSSettings: {
-        OSiOSSettings.autoPrompt: false,
-        OSiOSSettings.inAppLaunchUrl: false
-      }
+    'f48e46de-3348-4775-9c38-da36af3b4199',
+    iOSSettings: {
+      OSiOSSettings.autoPrompt: false,
+      OSiOSSettings.inAppLaunchUrl: false,
+    },
   );
-  OneSignal.shared.setInFocusDisplayType(OSNotificationDisplayType.notification);
+  OneSignal.shared
+      .setInFocusDisplayType(OSNotificationDisplayType.notification);
 
-  await OneSignal.shared.promptUserForPushNotificationPermission(fallbackToSettings: true);
+  await OneSignal.shared
+      .promptUserForPushNotificationPermission(fallbackToSettings: true);
 
   await OneSignal.shared.setExternalUserId('123456789');
 }

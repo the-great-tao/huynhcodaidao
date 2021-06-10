@@ -8,13 +8,13 @@ part of 'user_token.dart';
 
 class UserTokenAdapter extends TypeAdapter<UserToken> {
   @override
-  final typeId = 0;
+  final int typeId = 0;
 
   @override
   UserToken read(BinaryReader reader) {
-    var numOfFields = reader.readByte();
-    var fields = <int, dynamic>{
-      for (var i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
+    final numOfFields = reader.readByte();
+    final fields = <int, dynamic>{
+      for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return UserToken(
       tokenType: fields[0] as String,
@@ -37,6 +37,16 @@ class UserTokenAdapter extends TypeAdapter<UserToken> {
       ..writeByte(3)
       ..write(obj.refreshToken);
   }
+
+  @override
+  int get hashCode => typeId.hashCode;
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is UserTokenAdapter &&
+          runtimeType == other.runtimeType &&
+          typeId == other.typeId;
 }
 
 // **************************************************************************

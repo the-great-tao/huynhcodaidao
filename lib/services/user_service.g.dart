@@ -9,7 +9,7 @@ part of 'user_service.dart';
 class _UserService implements UserService {
   _UserService(this._dio, {this.baseUrl}) {
     ArgumentError.checkNotNull(_dio, '_dio');
-    this.baseUrl ??= 'https://nova.huynhcodaidao.com/';
+    baseUrl ??= 'https://nova.huynhcodaidao.com/';
   }
 
   final Dio _dio;
@@ -17,7 +17,7 @@ class _UserService implements UserService {
   String baseUrl;
 
   @override
-  authenticate(
+  Future<UserToken> authenticate(
       {grantType = 'password',
       clientId = 2,
       clientSecret = 'zhxanQ6no1sP6NNYJtjhuGrDmgHbNpUxNKSisQbu',
@@ -35,8 +35,8 @@ class _UserService implements UserService {
       'password': password,
       'scope': scope
     };
-    final Response<Map<String, dynamic>> _result = await _dio.request(
-        '/oauth/token',
+    _data.removeWhere((k, v) => v == null);
+    final _result = await _dio.request<Map<String, dynamic>>('/oauth/token',
         queryParameters: queryParameters,
         options: RequestOptions(
             method: 'POST',
